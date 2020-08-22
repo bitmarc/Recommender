@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">RecomendAuto</string>
+    <!-- Strings related to login -->
+    <string name="prompt_username">Nombre de Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_up">Registrarse</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="welcome">"Bienvenido!"</string>
+    <string name="invalid_username">Nombre de usuario invalido</string>
+    <string name="invalid_password">La contraseña debe ser mayor a 5 caracteres</string>
+    <string name="login_failed">"Error al inicair sesión"</string>
+    <string name="signup_title">Nuevo Registro</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_recommendations">Recomendacion</string>
+    <string name="title_history">Historial</string>
+    <string name="title_profile">Perfil</string>
+
+    <string name="message_start_recommender">Para recibir recomendaciones, deberás completar el
+        formulario que se te precentará a continuación, el cuál tiene el propósito de identificar
+        tu perfil de usuario y con base en este, proporcionarte resultados personalizados</string>
+
+    <string name="title_form">Selecciona la opcion que creas mas conveniente para cada pregunta y al finalizar presiona Enviar</string>
+</resources>
