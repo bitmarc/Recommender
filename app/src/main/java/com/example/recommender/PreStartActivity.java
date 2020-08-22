@@ -30,12 +30,10 @@ public class PreStartActivity extends AppCompatActivity {
     }
 
     private Intent moveToMainActivity() {
-        Intent activityIntent = new Intent(this, MainActivity.class);
-        return activityIntent;
+        return new Intent(this, MainActivity.class);
     }
     private Intent moveToLogin() {
-        Intent activityIntent = new Intent(this, LoginActivity.class);
-        return activityIntent;
+        return new Intent(this, LoginActivity.class);
     }
 
 }

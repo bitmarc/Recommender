@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">RecomendAuto</string>
+    <string name="app_version">Recomendauto v.0.5.1</string>
+    <string name="app_info">UPIITA-IPN 2020</string>
+    <string name="app_developer_email">marcoarojas.95@gmail.com</string>
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de Usuario</string>
     <string name="prompt_password">Contraseña</string>
+    <string name="prompt_person_name">Nombre Personal</string>
+    <string name="prompt_email">Correo electronico</string>
+    <string name="prompt_repeat_password">Repite contraseña</string>
+
     <string name="action_sign_in">Iniciar sesión</string>
     <string name="action_sign_up">Registrarse</string>
     <string name="action_sign_in_short">Entrar</string>
@@ -11,12 +18,18 @@
     <string name="invalid_password">La contraseña debe ser mayor a 5 caracteres</string>
     <string name="login_failed">"Error al inicair sesión"</string>
     <string name="signup_title">Nuevo Registro</string>
+    <string name="signup_or_text">ó</string>
+
+    <string name="logout_text">Cerrar sesión</string>
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Inicio</string>
     <string name="title_recommendations">Recomendacion</string>
     <string name="title_history">Historial</string>
     <string name="title_profile">Perfil</string>
+
+    <string name="start_text_recom">Empezar</string>
+    <string name="send_data_recom">Enviar</string>
 
     <string name="message_start_recommender">Para recibir recomendaciones, deberás completar el
         formulario que se te precentará a continuación, el cuál tiene el propósito de identificar

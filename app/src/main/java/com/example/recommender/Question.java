@@ -13,7 +13,7 @@ public class Question {
     public Question(int Id, String Title){
         this.id=Id;
         this.tittle=Title;
-        this.options=new ArrayList<String>();
+        this.options=new ArrayList<>();
         this.answer=0;
     }
     public int getId() {

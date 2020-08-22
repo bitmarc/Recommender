@@ -33,8 +33,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     public ItemForm(Context context, ArrayList<Question> questions) {
         super(context);
         System.out.println("Empieza ItemForm");
-        idsContenedores = new ArrayList<Integer>();
-        idsSpiners = new ArrayList<Integer>();
+        idsContenedores = new ArrayList<>();
+        idsSpiners = new ArrayList<>();
         this.questions = questions;
         this.counter=0;
     }
@@ -45,18 +45,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         for (int i = 0; i < questions.size(); i++) {
             parent.addView(createItem(context, questions.get(i)),layoutParamsP);
-            //parent.addView(getTv(context)); //prueba
         }
     }
-
-    public TextView getTv(Context context){
-        TextView nuevo=new TextView(context);
-        nuevo.setId(View.generateViewId());
-        nuevo.setText("tv");
-        idsContenedores.add(nuevo.getId());
-        return nuevo;
-    }
-
 
     private ConstraintLayout createItem(Context context, Question question) {
         contenedor = new ConstraintLayout(context);
@@ -98,7 +88,6 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         constraintSet.connect(spiner.getId(), ConstraintSet.TOP, title.getId(), constraintSet.BOTTOM);
         constraintSet.applyTo(contenedor);
         idsContenedores.add(contenedor.getId());
-        System.out.println("fillcontainer ok::");
         return contenedor;
     }
 
@@ -118,7 +107,6 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
                 System.out.println("correcto "+questions.size()+" j:"+j);
             }else{
                 status=false;
-                System.out.println("break");
                 break;
             }
         }
