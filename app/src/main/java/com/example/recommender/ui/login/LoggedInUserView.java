@@ -5,10 +5,10 @@ package com.example.recommender.ui.login;
  */
 class LoggedInUserView {
     private String displayName;
-    private int displayId; //agregado por mi
+    private String displayId; //agregado por mi
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String displayName, int displayId) {
+    LoggedInUserView(String displayName, String displayId) {
         this.displayName = displayName;
         this.displayId=displayId;
     }
@@ -16,7 +16,7 @@ class LoggedInUserView {
     String getDisplayName() {
         return displayName;
     }
-    int getDisplayId() {
+    String getDisplayId() {
         return displayId;
     }
 }

@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         // Se ejecuta como resultado despues de un registro exitoso.
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
+                System.out.println("el dato es: "+data.getStringExtra("result"));
                 this.usernameEditText.setText(data.getStringExtra("result"));
                 listener();
             }
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    int id= (loginResult.getSuccess()).getDisplayId(); //agregada , viene de login view model y logged in user view
+                    String id= (loginResult.getSuccess()).getDisplayId(); //agregada , viene de login view model y logged in user view
                     String personName = (loginResult.getSuccess()).getDisplayName();
                     User usuario = new User(id,usernameEditText.getText().toString(),passwordEditText.getText().toString(),personName);
                     SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);

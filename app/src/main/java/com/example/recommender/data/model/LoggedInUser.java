@@ -5,15 +5,15 @@ package com.example.recommender.data.model;
  */
 public class LoggedInUser {
 
-    private int userId;
+    private String userId;
     private String displayName;
 
-    public LoggedInUser(int userId, String displayName) {
+    public LoggedInUser(String userId, String displayName) {
         this.userId = userId;
         this.displayName = displayName;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 

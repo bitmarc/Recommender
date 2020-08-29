@@ -13,7 +13,7 @@ public class ProfileViewModel extends ViewModel {
 
 
     public ProfileViewModel() {
-        newUser = new User(10,"jhon12345","abc123", "Juan");
+        newUser = new User("10","jhon12345","abc123", "Juan");
         newUser.setEmail("jhonconor@asd.com");
         newUser.setPersonname("Jhon Conor");
     }
@@ -25,7 +25,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public void refresh(){
-        User nuevo =new User(10,"jhon12345","abc123","Juan");
+        User nuevo =new User("10","jhon12345","abc123","Juan");
         nuevo.setPersonname("Cambiado UNO"+Math.random()*6);
         nuevo.setEmail("jhonconor@asd.com");
         this.newUser=nuevo;

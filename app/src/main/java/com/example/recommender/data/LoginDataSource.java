@@ -17,7 +17,7 @@ public class LoginDataSource {
                 // TODO: handle loggedInUser authentication
             if ((username.equals(usuario1)) && (password.equals(password1))) {
                 //java.util.UUID.randomUUID().toString()
-                LoggedInUser fakeUser = new LoggedInUser(6,"Juana V.");
+                LoggedInUser fakeUser = new LoggedInUser("6","Juana V.");
                 return new Result.Success<>(fakeUser);
             }else {
                 int codigoerror=111;
