@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void listener(){
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -115,7 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                     String id= (loginResult.getSuccess()).getDisplayId(); //agregada , viene de login view model y logged in user view
                     String personName = (loginResult.getSuccess()).getDisplayName();
-                    User usuario = new User(id,usernameEditText.getText().toString(),passwordEditText.getText().toString(),personName);
+                    User usuario = new User();
+                    usuario.setId(id);
+                    usuario.setUsername(usernameEditText.getText().toString());
+                    usuario.setPassword(passwordEditText.getText().toString());
+                    usuario.setPersonname(personName);
                     SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
                     sessionManagement.saveSession(usuario);
                     setResult(Activity.RESULT_OK);

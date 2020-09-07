@@ -3,21 +3,21 @@ package com.example.recommender;
 // Clase usuario para almacenar objetos referentes a la informacion del usuario loggeado.
 public class User {
 
-    String id;
-    String username;
-    String password;
-    String personname;
-    String email;
+    private String id;
+    private String username;
+    private String password;
+    private String personname;
+    private String email;
 
-    public User(String id, String username, String password, String personname){
+
+    public User(String username, String password, String personname, String email){
         this.username=username;
         this.password=password;
-        this.id=id;
+        this.email=email;
         this.personname=personname;
     }
 
     public User(){
-
     }
 
 

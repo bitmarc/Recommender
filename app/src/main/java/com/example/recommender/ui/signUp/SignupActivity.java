@@ -1,6 +1,7 @@
 package com.example.recommender.ui.signUp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
@@ -15,18 +16,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.example.recommender.Interface.JsonApi;
+import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.R;
-import com.example.recommender.retrofit.models.UserLog;
+import com.example.recommender.User;
+import com.example.recommender.connection.ConnectionManager;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignupActivity extends AppCompatActivity {
     private SignupViewModel signupViewModel;
@@ -37,7 +34,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText passwordRepEditText;
-    private String userNamme;
+    private User newUser;
+    ConnectionManager cm;
 
 
     // clase que maneja el registro de un nuevo usuario.
@@ -47,17 +45,38 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         this.signupButton = findViewById(R.id.signupLaunch);
-        this.petB= findViewById(R.id.petB);
         this.persoNameEditText = findViewById(R.id.editTextTextPersonName);
         this.usernameEditText = findViewById(R.id.editTextTextUserName);
         this.emailEditText = findViewById(R.id.editTextTextEmailAddress);
         this.passwordEditText = findViewById(R.id.editTextTextPassword);
         this.passwordRepEditText = findViewById(R.id.editTextTextPasswordRpeat);
+        cm = new ConnectionManager();
         listener();
     }
 
     private void listener() {
         signupViewModel = ViewModelProviders.of(this).get(SignupViewModel.class);
+
+        signupViewModel.getSignupFormState().observe(this, new Observer<SignupFormState>() {
+            @Override
+            public void onChanged(SignupFormState signupFormState) {
+                if (signupFormState == null) {
+                    return;
+                }
+                signupButton.setEnabled(signupFormState.isDataValid());
+                if (signupFormState.getUsernameError() != null) {
+                    usernameEditText.setError(getString(signupFormState.getUsernameError()));
+                }
+                if (signupFormState.getPasswordError() != null) {
+                    passwordEditText.setError(getString(signupFormState.getPasswordError()));
+                    passwordRepEditText.setError(getString(R.string.different_password));
+                }
+                if (signupFormState.getEmailError() != null){
+                    emailEditText.setError(getString(signupFormState.getEmailError()));
+                }
+            }
+        });
+
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -72,11 +91,10 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                signupViewModel.signupDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                signupViewModel.signupDataChanged(getApplicationContext(), usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),emailEditText.getText().toString(), passwordRepEditText.getText().toString());
             }
         };
-
 
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
@@ -87,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
                     signupViewModel.signup(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", userNamme);
+                    returnIntent.putExtra("result", newUser.getUsername());
                     setResult(Activity.RESULT_OK,returnIntent);
                     finish();
                 }
@@ -98,62 +116,39 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result",userNamme);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                verificar();
             }
         });
-
-        petB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getUsername();
-            }
-        });
-
     }
 
-    public void getUsername(){
-        System.out.println("Entro a getUsername");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.18:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        JsonApi jsonApi = retrofit.create(JsonApi.class);
-        Call<List<UserLog>> call = jsonApi.getUser();
-        call.enqueue(new Callback<List<UserLog>>() {
+    private void verificar(){
+        cm.checkUser(usernameEditText.getText().toString(), new MyCallback(){
             @Override
-            public void onResponse(Call<List<UserLog>> call, Response<List<UserLog>> response) {
-                if(!response.isSuccessful()){
-                    setUserNamme("error, codigo:  "+response.code());
-                    System.out.println("respuesta no exitosa");
-                    return;
+            public void onDataGot(String isUsernameValid) {
+                if(isUsernameValid.equals("El usuario ya existe")){
+                    usernameEditText.setError(getString(R.string.existing_username));
                 }else{
-                    System.out.println("respuesta exitosa");
-                    List<UserLog> userList = response.body();
-                    for(UserLog userLog: userList){
-                        setUserNamme(userLog.getUsername());
-                    }
+                    System.out.println("validacion:: No existe");
+                    cm.addUser(usernameEditText, passwordEditText, persoNameEditText, emailEditText, new MyCallback() {
+                        @Override
+                        public void onDataGot(String number) {
+                        }
+                        @Override
+                        public void onUserAddedGot(User usuario) {
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("result",usuario.getUsername());
+                            setResult(Activity.RESULT_OK,returnIntent);
+                            finish();
+                        }
+                    });
                 }
             }
+
             @Override
-            public void onFailure(Call<List<UserLog>> call, Throwable t) {
-                System.out.println("hubo un fallo!!");
-                setUserNamme(t.getMessage());
+            public void onUserAddedGot(User usuario) {
             }
         });
+
     }
-
-
-    public String getUserNamme() {
-        return userNamme;
-    }
-
-    public void setUserNamme(String userNamme) {
-        this.userNamme = userNamme;
-    }
-
-
 
 }
