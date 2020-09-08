@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public EditText usernameEditText;
     public EditText passwordEditText;
+    public TextView logoApp;
     public Button loginButton;
     public ProgressBar loadingProgressBar;
     public int LAUNCH_SECOND_ACTIVITY = 1;
@@ -42,12 +44,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        final Typeface type = Typeface.createFromAsset(this.getAssets(),"fonts/Caveat-Bold.ttf");
         this.usernameEditText = findViewById(R.id.username);
         this.passwordEditText = findViewById(R.id.password);
         this.loginButton = findViewById(R.id.login);
         this.loadingProgressBar = findViewById(R.id.loading);
-
+        this.logoApp = findViewById(R.id.logoApp);
+        logoApp.setTypeface(type);
         listener();
     }
 

@@ -21,8 +21,7 @@ public interface JsonApi {
     @GET("signUp/user/{name}")
     Call<String>checkUser(@Path("name")String username);
 
-
-
-
+    @POST("logIn")
+    Call<User>logInUser(@Body User user);
 
 }

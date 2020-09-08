@@ -6,6 +6,8 @@ import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.User;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +47,15 @@ public class ConnectionManager {
                 System.out.println("hubo un fallo!!");
             }
         });
+    }
+
+    public User logInUser(String userName, String password) throws IOException {
+        final User[] user = {new User()};
+        user[0].setUsername(userName);
+        user[0].setPassword(password);
+        Call<User> call = jsonApi.logInUser(user[0]);
+        user[0]=call.execute().body();
+        return user[0];
     }
 
 

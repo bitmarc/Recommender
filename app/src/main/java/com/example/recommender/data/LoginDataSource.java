@@ -1,7 +1,9 @@
 package com.example.recommender.data;
 
 import com.example.recommender.Interface.JsonApi;
+import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.User;
+import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -17,56 +19,31 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
+    private User user;
     private String usuario1="juana";
     private String password1="123456";
+    LoggedInUser userLoggedIn;
     private int codigoerror=111;
 
-    public Result<LoggedInUser> login(String username, String password) {
-/*        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.111:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        JsonApi jsonApi = retrofit.create(JsonApi.class);
-        Call<User> call = jsonApi.getUser(username, password);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(!response.isSuccessful()){
-                    codigoerror=response.code();
-                }else{
-                    User resUser = response.body();
+    public Result<LoggedInUser> login(String username, String password) throws IOException {
+        ConnectionManager cm = new ConnectionManager();
+        User usuario= cm.logInUser(username, password);
+        if(!usuario.getId().equals("0")){
+            System.out.print("exito usuario encontrado y pasword correcto");
+            LoggedInUser userAdded = new LoggedInUser(usuario.getId(),usuario.getPersonname());
+            return new Result.Success<>(userAdded);
+        }else{
+            System.out.print("error usuario no encontrado o password incorrecto");
+            try {
 
-                }
+                if (codigoerror==111)
+                    throw new MiExcepcion(111);
+                else
+                    throw new MiExcepcion(222);
+            } catch (MiExcepcion ex) {
+                return new Result.Error(new IOException(ex.getMessage(), ex));
             }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                System.out.println("hubo un fallo!!");
-                setUserNamme(t.getMessage());
-            }
-        });*/
-        try {
-                // TODO: handle loggedInUser authentication
-            if ((username.equals(usuario1)) && (password.equals(password1))) {
-                //java.util.UUID.randomUUID().toString()
-                LoggedInUser fakeUser = new LoggedInUser("6","Juana V.");
-                return new Result.Success<>(fakeUser);
-
-            }else {
-                try {
-
-                    if (codigoerror==111)
-                        throw new MiExcepcion(111);
-                    else
-                        throw new MiExcepcion(222);
-                } catch (MiExcepcion ex) {
-                    return new Result.Error(new IOException(ex.getMessage(), ex));
-                }
-            }
-
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
         }
-
     }
 
     public void logout() {

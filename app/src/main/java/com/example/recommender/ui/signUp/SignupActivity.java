@@ -128,7 +128,6 @@ public class SignupActivity extends AppCompatActivity {
                 if(isUsernameValid.equals("El usuario ya existe")){
                     usernameEditText.setError(getString(R.string.existing_username));
                 }else{
-                    System.out.println("validacion:: No existe");
                     cm.addUser(usernameEditText, passwordEditText, persoNameEditText, emailEditText, new MyCallback() {
                         @Override
                         public void onDataGot(String number) {
