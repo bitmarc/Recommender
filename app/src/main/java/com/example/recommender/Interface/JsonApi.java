@@ -24,4 +24,7 @@ public interface JsonApi {
     @POST("logIn")
     Call<User>logInUser(@Body User user);
 
+    @POST("user")
+    Call<User>getDataUser(@Body User user);
+
 }

@@ -11,8 +11,6 @@ public class SessionManagement {
 
     String SESSION_KEY = "session_user";// id
     String USERNAME = "user_name";      // nombre usuario
-    String PERSONANME = "person_name";  // nombre persona
-    String USERPASS = "user_password";  // contraseña
 
     public SessionManagement(Context context){
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
@@ -23,23 +21,21 @@ public class SessionManagement {
         //save session of user whenever user is logged in
         editor.putString(SESSION_KEY,user.getId()).commit();
         editor.putString(USERNAME,user.getUsername()).commit();
-        editor.putString(PERSONANME,user.getPersonname()).commit();
-        editor.putString(USERPASS,user.getPassword());
     }
 
     public String getSession(){
-        //return user id whose session is saved
-        return sharedPreferences.getString(SESSION_KEY, "-1");
+        return sharedPreferences.getString(USERNAME, "-1");
     }
 
     public User getUser(){
-        User usuario = new User(sharedPreferences.getString(SESSION_KEY, "-1"),sharedPreferences.getString(USERNAME, "UNKNOW"),
-                sharedPreferences.getString(USERPASS,"UNKNOW"),sharedPreferences.getString(PERSONANME,"UNKNOW"));
-        //return user id whose session is saved
+        User usuario = new User();
+        usuario.setId(sharedPreferences.getString(SESSION_KEY, "-1"));
+        usuario.setUsername(sharedPreferences.getString(USERNAME, "-1"));
+        //return username whose session is saved
         return usuario;
     }
 
     public void removeSession(){
-        editor.putString(SESSION_KEY,"-1").commit();
+        editor.putString(USERNAME,"-1").commit();
     }
 }

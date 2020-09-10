@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.currentUser=new User("1","a","a","a");
+        this.currentUser=new User();
         getSession();
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -42,4 +42,7 @@ public class MainActivity extends AppCompatActivity {
         this.currentUser=sessionManagement.getUser();
     }
 
+    public User getUser() {
+        return  currentUser;
+    }
 }

@@ -30,7 +30,7 @@ public class LoginDataSource {
         User usuario= cm.logInUser(username, password);
         if(!usuario.getId().equals("0")){
             System.out.print("exito usuario encontrado y pasword correcto");
-            LoggedInUser userAdded = new LoggedInUser(usuario.getId(),usuario.getPersonname());
+            LoggedInUser userAdded = new LoggedInUser(usuario.getId());
             return new Result.Success<>(userAdded);
         }else{
             System.out.print("error usuario no encontrado o password incorrecto");

@@ -77,9 +77,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        //initiate successful logged in experience
+        String id= model.getDisplayId(); //agregada , viene de login view model y logged in user view
+        User usuario = new User();
+        usuario.setId(id);
+        usuario.setUsername(usernameEditText.getText().toString());
+        SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
+        sessionManagement.saveSession(usuario);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
@@ -98,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
+
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -117,15 +122,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    String id= (loginResult.getSuccess()).getDisplayId(); //agregada , viene de login view model y logged in user view
-                    String personName = (loginResult.getSuccess()).getDisplayName();
-                    User usuario = new User();
-                    usuario.setId(id);
-                    usuario.setUsername(usernameEditText.getText().toString());
-                    usuario.setPassword(passwordEditText.getText().toString());
-                    usuario.setPersonname(personName);
-                    SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
-                    sessionManagement.saveSession(usuario);
                     setResult(Activity.RESULT_OK);
                     Intent activityIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(activityIntent);

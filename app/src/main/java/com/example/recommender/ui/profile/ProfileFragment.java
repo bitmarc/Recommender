@@ -30,12 +30,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
-    public MainActivity main;
+    private MainActivity activity;
+    private User user;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        main = (MainActivity) getActivity(); //para poder recuperar variables desde el main
-        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);//instanciar la clase ProfileViewModel
+        activity = (MainActivity) getActivity();
+        this.user= activity.getUser();
+        profileViewModel = ViewModelProviders.of(this, new ProfileViewModelFactory(user)).get(ProfileViewModel.class);//instanciar la clase ProfileViewModel
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);  // referencia a la actividad raiz
         final EditText editTextPn = root.findViewById(R.id.editTextPersonName2);                // definir mi variable edittext
@@ -47,15 +49,39 @@ public class ProfileFragment extends Fragment {
         final Button buttonlogout = root.findViewById(R.id.logout);
         fabDone.hide();
 
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<User>() {    // metodo que observa y actualiza la UI
+        profileViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
-            public void onChanged(@Nullable User s) {
+            public void onChanged(User s) {
+                System.out.println("Actualizao !");
                 editTextPn.setText(s.getPersonname());
                 editTextUn.setText(s.getUsername());
                 editTextEa.setText(s.getEmail());
                 editTextP.setText(s.getPassword());
             }
         });
+
+/*        profileViewModel.getCurrentPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                editTextP.setText(s);
+            }
+        });
+
+        profileViewModel.getCurrentPersonName().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                editTextPn.setText(s);
+            }
+        });
+
+        profileViewModel.getCurrentEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                editTextEa.setText(s);
+            }
+        });*/
+
+
 
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +92,7 @@ public class ProfileFragment extends Fragment {
         fabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profileViewModel.refresh();
+                //profileViewModel.refresh();
                 setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout);
             }
         });

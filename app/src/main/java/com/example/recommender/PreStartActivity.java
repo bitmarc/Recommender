@@ -19,10 +19,10 @@ public class PreStartActivity extends AppCompatActivity {
     private Intent checkSession() {
         //check if user is logged in
         SessionManagement sessionManagement = new SessionManagement(PreStartActivity.this);
-        String userID = sessionManagement.getSession();
+        String username = sessionManagement.getSession();
 
-        if(userID.equals("-1")){// usuario loggeado
-            System.out.println("User id : "+userID);
+        if(username.equals("-1")){// usuario loggeado
+            System.out.println("Username session : "+username);
             return moveToLogin();
         }
         else{                                      // usuario no legeado

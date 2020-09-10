@@ -21,11 +21,10 @@ public class ConnectionManager {
 
     public ConnectionManager(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.111:5000/")
+                .baseUrl("http://192.168.0.83:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         jsonApi = retrofit.create(JsonApi.class);
-        //this.context=context;
     }
 
 
@@ -58,7 +57,6 @@ public class ConnectionManager {
         return user[0];
     }
 
-
     public void addUser(EditText usernameEditText, EditText passwordEditText, EditText persoNameEditText, EditText emailEditText, final MyCallback callback){
         final User[] usuario = {new User(usernameEditText.getText().toString(), passwordEditText.getText().toString(),
                 persoNameEditText.getText().toString(), emailEditText.getText().toString())};
@@ -81,6 +79,19 @@ public class ConnectionManager {
         });
     }
 
+    public String getUserPersonNAme(User user) throws IOException {
+        final User[] fakeUser = {new User()};
+        Call<User> call = jsonApi.getDataUser(user);
+        fakeUser[0]=call.execute().body();
+        return fakeUser[0].getPersonname();
+    }
+
+    public User getDataUser(User user) throws IOException {
+        final User[] fakeUser = {new User()};
+        Call<User> call = jsonApi.getDataUser(user);
+        fakeUser[0]=call.execute().body();
+        return fakeUser[0];
+    }
 
 
 }

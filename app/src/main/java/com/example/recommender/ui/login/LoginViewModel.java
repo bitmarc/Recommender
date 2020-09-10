@@ -35,14 +35,6 @@ public class LoginViewModel extends ViewModel {
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
         new getresultBackground().execute(username, password);
-/*        Result<LoggedInUser> result = loginRepository.login(username, password);
-
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName(),data.getUserId()))); //modificado por mi
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }*/
     }
 
     public void loginDataChanged(String username, String password) {
@@ -77,10 +69,8 @@ public class LoginViewModel extends ViewModel {
 
         @Override
         protected Result<LoggedInUser> doInBackground(String... params) {
-            System.out.print("entro a do in background");
             Result<LoggedInUser> result = null;
             try {
-                System.out.print("param1: "+params[0]+" y param2: "+params[1]);
                 result = loginRepository.login(params[0], params[1]);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -90,11 +80,10 @@ public class LoginViewModel extends ViewModel {
 
         @Override
         protected void onPostExecute(Result<LoggedInUser> result) {
-            //super.onPostExecute(result);
+            super.onPostExecute(result);
             if (result instanceof Result.Success) {
-                System.out.print("instanceof success");
                 LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-                loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName(),data.getUserId()))); //modificado por mi
+                loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUserId())));
             } else {
                 System.out.print("login failed");
                 loginResult.setValue(new LoginResult(R.string.login_failed));

@@ -9,10 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.recommender.R;
 import com.example.recommender.connection.ConnectionManager;
-import com.example.recommender.data.Result;
-import com.example.recommender.data.model.LoggedInUser;
-import com.example.recommender.ui.signUp.SignupFormState;
-import com.example.recommender.ui.signUp.SignupFormState;
 
 public class SignupViewModel extends ViewModel {
     private MutableLiveData<SignupFormState> signupFormState = new MutableLiveData<>();
