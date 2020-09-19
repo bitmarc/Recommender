@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private MainActivity activity;
     private User user;
+    public ProgressBar loadingProgressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class ProfileFragment extends Fragment {
         final EditText editTextEa = root.findViewById(R.id.editTextTextEmailAddress);
         final EditText editTextP = root.findViewById(R.id.editTextTextPassword);
         final Button buttonlogout = root.findViewById(R.id.logout);
+        this.loadingProgressBar = root.findViewById(R.id.pBar);
         fabDone.hide();
 
         profileViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
@@ -60,40 +63,34 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-/*        profileViewModel.getCurrentPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                editTextP.setText(s);
-            }
-        });
-
-        profileViewModel.getCurrentPersonName().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                editTextPn.setText(s);
-            }
-        });
-
-        profileViewModel.getCurrentEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                editTextEa.setText(s);
-            }
-        });*/
-
-
 
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout);
+                profileViewModel.refresh();
             }
         });
         fabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //profileViewModel.refresh();
+                User newUser = new User(editTextUn.getText().toString(), editTextP.getText().toString(),
+                        editTextPn.getText().toString(), editTextEa.getText().toString());
+                newUser.setId(user.getId());
+                profileViewModel.updateUser(newUser);
+                activity.setUser(newUser);
+                profileViewModel.refresh();
                 setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout);
+            }
+        });
+
+        profileViewModel.getPbarValue().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean)
+                    loadingProgressBar.setVisibility(View.VISIBLE);
+                else
+                    loadingProgressBar.setVisibility(View.GONE);
             }
         });
 
@@ -123,10 +120,10 @@ public class ProfileFragment extends Fragment {
             editTextEa.setCursorVisible(false);
             editTextEa.setBackground(null);
 
-            editTextP.setEnabled(false);
-            editTextP.setClickable(false);
-            editTextP.setCursorVisible(false);
-            editTextP.setBackground(null);
+            //editTextP.setEnabled(false);
+            //editTextP.setClickable(false);
+            //editTextP.setCursorVisible(false);
+            //editTextP.setBackground(null);
 
 
         }else{
@@ -150,10 +147,10 @@ public class ProfileFragment extends Fragment {
             editTextEa.setCursorVisible(true);
             editTextEa.setBackgroundResource(android.R.drawable.edit_text);
 
-            editTextP.setEnabled(true);
-            editTextP.setClickable(true);
-            editTextP.setCursorVisible(true);
-            editTextP.setBackgroundResource(android.R.drawable.edit_text);
+            //editTextP.setEnabled(true);
+            //editTextP.setClickable(true);
+            //editTextP.setCursorVisible(true);
+            //editTextP.setBackgroundResource(android.R.drawable.edit_text);
 
         }
 

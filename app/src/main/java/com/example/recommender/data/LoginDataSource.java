@@ -1,39 +1,27 @@
 package com.example.recommender.data;
 
-import com.example.recommender.Interface.JsonApi;
-import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.User;
+import com.example.recommender.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.data.model.LoggedInUser;
 
 import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
-    private User user;
-    private String usuario1="juana";
-    private String password1="123456";
-    LoggedInUser userLoggedIn;
     private int codigoerror=111;
 
-    public Result<LoggedInUser> login(String username, String password) throws IOException {
+    public Result<LoggedInUser> login(String username, String password, String mac) throws IOException {
         ConnectionManager cm = new ConnectionManager();
-        User usuario= cm.logInUser(username, password);
-        if(!usuario.getId().equals("0")){
+        UserResponse userR= cm.logInUser(username, password, mac);
+        if(!userR.getMessage().equals("Error de autenticación")){
             System.out.print("exito usuario encontrado y pasword correcto");
-            LoggedInUser userAdded = new LoggedInUser(usuario.getId());
+            LoggedInUser userAdded = new LoggedInUser(userR.getUser().getId());
             return new Result.Success<>(userAdded);
         }else{
-            System.out.print("error usuario no encontrado o password incorrecto");
+            System.out.print(userR.getMessage());
             try {
 
                 if (codigoerror==111)

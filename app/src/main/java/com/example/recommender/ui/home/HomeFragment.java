@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private MainActivity activity;
     private User user;
+    public ProgressBar loadingProgressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView appTitle = root.findViewById(R.id.text_home);
         final TextView msgWellcome = root.findViewById(R.id.tvWellcome);
+        this.loadingProgressBar = root.findViewById(R.id.pB);
 
         homeViewModel.getTitle().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -45,6 +48,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 msgWellcome.setText(s);
+            }
+        });
+
+        homeViewModel.getPbarValue().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean)
+                    loadingProgressBar.setVisibility(View.VISIBLE);
+                else
+                    loadingProgressBar.setVisibility(View.GONE);
             }
         });
 

@@ -78,10 +78,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         //initiate successful logged in experience
-        String id= model.getDisplayId(); //agregada , viene de login view model y logged in user view
+        String id= model.getDisplayId();
         User usuario = new User();
         usuario.setId(id);
         usuario.setUsername(usernameEditText.getText().toString());
+        usuario.setPassword(passwordEditText.getText().toString());
         SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
         sessionManagement.saveSession(usuario);
     }
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void listener(){
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory(getApplication())).get(LoginViewModel.class);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override

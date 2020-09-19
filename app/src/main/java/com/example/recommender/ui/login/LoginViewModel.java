@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.app.Application;
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Patterns;
 
@@ -13,15 +17,18 @@ import com.example.recommender.data.model.LoggedInUser;
 import com.example.recommender.R;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
+    private Application app;
 
-    LoginViewModel(LoginRepository loginRepository) {
+    LoginViewModel(LoginRepository loginRepository, Application app) {
         this.loginRepository = loginRepository;
+        this.app=app;
     }
 
     LiveData<LoginFormState> getLoginFormState() {
@@ -34,7 +41,12 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        new getresultBackground().execute(username, password);
+/*        WifiManager manager = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = manager.getConnectionInfo();
+        String address = info.getMacAddress();*/
+        String address = UUID.randomUUID().toString();
+        System.out.println(address);
+        new getresultBackground().execute(username, password, address);
     }
 
     public void loginDataChanged(String username, String password) {
@@ -71,7 +83,7 @@ public class LoginViewModel extends ViewModel {
         protected Result<LoggedInUser> doInBackground(String... params) {
             Result<LoggedInUser> result = null;
             try {
-                result = loginRepository.login(params[0], params[1]);
+                result = loginRepository.login(params[0], params[1], params[2]);
             } catch (IOException e) {
                 e.printStackTrace();
             }

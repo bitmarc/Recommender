@@ -18,6 +18,7 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> personName;
     private MutableLiveData<String> email;
     private MutableLiveData<String> password;
+    private MutableLiveData<Boolean> flag;
     User user;
 
 
@@ -28,35 +29,87 @@ public class ProfileViewModel extends ViewModel {
         email = new MutableLiveData<>();
         password = new MutableLiveData<>();
         userLive = new MutableLiveData<>();
+        flag = new MutableLiveData<>();
+        flag.setValue(false);
+    }
+
+    public LiveData<Boolean> getPbarValue(){
+        return flag;
     }
 
     public LiveData<User> getCurrentUser(){
-        new updateDataUserInBackground().execute(user);
+        new getDataUserInBackground().execute(user);
         return userLive;
     }
 
-
-    public void updateCurrentDataUser(User user){
-        userLive.setValue(user);
+    public void updateUser(User newUser){
+        new updateDataUserInBackground().execute(newUser);
     }
 
-    class updateDataUserInBackground extends AsyncTask<User, Void, User>{
+    //para refresacar los datos mostrados se ejecuta al cambiar datos del formulario y ya sea que se guarden o no
+    public void refresh(){
+        new getDataUserInBackground().execute(user);
+    }
+
+    //este metodo se ejecuta al finalizar el proceso en segundo plano de la obtencion de datos (getDataUserInBackground)
+    public void updateCurrentDataUser(User user){
+        userLive.setValue(user);
+        //this.user.setId(user.getId()); // para guardar el id de usuario -- en cuanto maneje session no será necesario
+    }
+
+    // se ejecuta despues de editar datos (updateDataUserInBackground)
+    private void updateThisUser(User user){
+        //this.user=user;
+        // Cuando maeje el cambio de contraseña, se deberá manejar diferente
+        User newActualUser = new User(user.getUsername(),this.user.getPassword(),user.getPersonname(),user.getEmail());
+        this.user=newActualUser;
+        refresh();
+    }
+
+    class getDataUserInBackground extends AsyncTask<User, Void, User>{
+        @Override
+        protected void onPreExecute() {
+            flag.setValue(true);
+        }
+
         @Override
         protected User doInBackground(User... users) {
-            User user=new User();
-            ConnectionManager cm = new ConnectionManager();
+            User userT=new User("connection error","connection error","connection error","connection error");
+            ConnectionManager cm = new ConnectionManager(user.getUsername(),user.getPassword());
             try {
-                user=cm.getDataUser(users[0]);
+                userT=cm.getDataUser(users[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return user;
+            return userT;
         }
 
         @Override
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
+            flag.setValue(false);
             updateCurrentDataUser(user);
+        }
+    }
+
+    class updateDataUserInBackground extends AsyncTask<User, Void, User>{
+
+        @Override
+        protected User doInBackground(User... users) {
+            User userT=new User();
+            ConnectionManager cm = new ConnectionManager(user.getUsername(),user.getPassword());
+            try {
+                userT=cm.updateDataUser(users[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return userT;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+            updateThisUser(user); //actualizar usuario en la clase y main
         }
     }
 

@@ -45,4 +45,10 @@ public class MainActivity extends AppCompatActivity {
     public User getUser() {
         return  currentUser;
     }
+    public void setUser(User user){ // ver fragment profile
+        SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+        sessionManagement.updateSession(user);
+        this.currentUser=sessionManagement.getUser();
+    }
+
 }

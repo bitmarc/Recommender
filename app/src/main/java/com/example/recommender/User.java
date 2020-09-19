@@ -1,6 +1,6 @@
 package com.example.recommender;
 
-// Clase usuario para almacenar objetos referentes a la informacion del usuario loggeado.
+// Clase usuario para manejaar objetos referentes a la informacion del usuario loggeado.
 public class User {
 
     private String id;

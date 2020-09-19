@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
+import com.example.recommender.Message;
 import com.example.recommender.R;
 import com.example.recommender.User;
+import com.example.recommender.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 
 
@@ -124,27 +126,30 @@ public class SignupActivity extends AppCompatActivity {
     private void verificar(){
         cm.checkUser(usernameEditText.getText().toString(), new MyCallback(){
             @Override
-            public void onDataGot(String isUsernameValid) {
-                if(isUsernameValid.equals("El usuario ya existe")){
+            public void onDataGot(Message message){
+                if(message.getMessage().equals("El usuario ya existe")){
                     usernameEditText.setError(getString(R.string.existing_username));
                 }else{
                     cm.addUser(usernameEditText, passwordEditText, persoNameEditText, emailEditText, new MyCallback() {
                         @Override
-                        public void onDataGot(String number) {
+                        public void onDataGot(Message message) {
                         }
                         @Override
-                        public void onUserAddedGot(User usuario) {
-                            Intent returnIntent = new Intent();
-                            returnIntent.putExtra("result",usuario.getUsername());
-                            setResult(Activity.RESULT_OK,returnIntent);
-                            finish();
+                        public void onUserAddedGot(UserResponse usuarR) {
+                            if(usuarR.getMessage().equals("Usuario agregado satisfactoriamente")){
+                                Intent returnIntent = new Intent();
+                                returnIntent.putExtra("result",usuarR.getUser().getUsername());
+                                setResult(Activity.RESULT_OK,returnIntent);
+                                finish();
+                            }else
+                               System.out.println(usuarR.getMessage());
                         }
                     });
                 }
             }
 
             @Override
-            public void onUserAddedGot(User usuario) {
+            public void onUserAddedGot(UserResponse usuarR) {
             }
         });
 
