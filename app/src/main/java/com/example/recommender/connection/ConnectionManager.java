@@ -9,6 +9,7 @@ import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.Message;
 import com.example.recommender.User;
 import com.example.recommender.UserResponse;
+import com.example.recommender.form.Form;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class ConnectionManager {
     private JsonApi jsonApi;
     //private Context context;
 
-    public ConnectionManager(String username, String password){
+    public ConnectionManager(String username, String password){ //usada para cuando se requiere autenticacion en la cabecera http
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -34,21 +35,21 @@ public class ConnectionManager {
                 .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.111:5000/")
+                .baseUrl("http://192.168.0.102:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
         jsonApi = retrofit.create(JsonApi.class);
     }
 
-    public ConnectionManager(){
+    public ConnectionManager(){ //sin autenticacion en cabecera de peticion http
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.111:5000/")
+                .baseUrl("http://192.168.0.102:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -119,31 +120,38 @@ public class ConnectionManager {
         }
     }
 
-    public User getDataUser(User user) throws IOException {
-        final User[] fakeUser = {new User()};
-        Call<User> call = jsonApi.getDataUser(user);
-        Response<User> response=call.execute();
+    public UserResponse getDataUser(User user) throws IOException {
+        final UserResponse[] fakeUserR = {new UserResponse()};
+        User fakeUser = new User();
+        Call<UserResponse> call = jsonApi.getDataUser(user);
+        Response<UserResponse> response=call.execute();
         if(response.isSuccessful()) {
-            fakeUser[0]=response.body();
-            return fakeUser[0];
+            fakeUserR[0]=response.body();
+            return fakeUserR[0];
         }
         else {
-            fakeUser[0].setPersonname("error: "+response.code());
-            fakeUser[0].setUsername("error: "+response.code());
-            fakeUser[0].setEmail("error: "+response.code());
-            fakeUser[0].setPassword("error: "+response.code());
-            fakeUser[0].setId("0");
-            return fakeUser[0];
+            fakeUser.setPersonname("error: "+response.code());
+            fakeUser.setUsername("error: "+response.code());
+            fakeUser.setEmail("error: "+response.code());
+            fakeUser.setPassword("error: "+response.code());
+            fakeUser.setId("0");
+            fakeUserR[0].setUser(fakeUser);
+            return fakeUserR[0];
         }
-        //fakeUser[0]=call.execute().body();
-        //return fakeUser[0];
     }
 
-    public User updateDataUser(User user) throws IOException {
-        User fakeUser = new User();
-        Call<User> call = jsonApi.updateDataUser(user);
-        fakeUser = call.execute().body();
-        return fakeUser;
+    public UserResponse updateDataUser(User user) throws IOException {
+        UserResponse fakeUserR = new UserResponse();
+        Call<UserResponse> call = jsonApi.updateDataUser(user);
+        fakeUserR = call.execute().body();
+        return fakeUserR;
+    }
+
+    public Form getUserForm() throws IOException {
+        Form userForm = new Form();
+        Call<Form> call = jsonApi.getform();
+        userForm = call.execute().body();
+        return userForm;
     }
 
 

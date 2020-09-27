@@ -3,9 +3,7 @@ package com.example.recommender.Interface;
 import com.example.recommender.Message;
 import com.example.recommender.User;
 import com.example.recommender.UserResponse;
-import com.example.recommender.retrofit.models.UserLog;
-
-import java.util.List;
+import com.example.recommender.form.Form;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,12 +26,16 @@ public interface JsonApi {
     Call<UserResponse>logInUser(@Body User user);
 
     @POST("user")
-    Call<User>getDataUser(@Body User user);
+    Call<UserResponse>getDataUser(@Body User user);
 
     @GET("wellcome")
     Call<Message>getPersonName();
 
     @PATCH("user")
-    Call<User>updateDataUser(@Body User user);
+    Call<UserResponse>updateDataUser(@Body User user);
+
+    @GET("form")
+    Call<Form> getform();
+
 
 }

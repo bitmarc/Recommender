@@ -10,22 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.recommender.MainActivity;
-import com.example.recommender.PreStartActivity;
 import com.example.recommender.R;
-import com.example.recommender.SessionManagement;
 import com.example.recommender.User;
-import com.example.recommender.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileFragment extends Fragment {
@@ -34,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private MainActivity activity;
     private User user;
     public ProgressBar loadingProgressBar;
+    private int LAUNCH_CHANGE_PASSWORD_ACTIVITY = 2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +47,7 @@ public class ProfileFragment extends Fragment {
         final EditText editTextEa = root.findViewById(R.id.editTextTextEmailAddress);
         final EditText editTextP = root.findViewById(R.id.editTextTextPassword);
         final Button buttonlogout = root.findViewById(R.id.logout);
+        final ImageView ivEditPass = root.findViewById(R.id.ivWaring);
         this.loadingProgressBar = root.findViewById(R.id.pBar);
         fabDone.hide();
 
@@ -67,10 +66,11 @@ public class ProfileFragment extends Fragment {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout);
+                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout,ivEditPass);
                 profileViewModel.refresh();
             }
         });
+
         fabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +80,16 @@ public class ProfileFragment extends Fragment {
                 profileViewModel.updateUser(newUser);
                 activity.setUser(newUser);
                 profileViewModel.refresh();
-                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout);
+                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout, ivEditPass);
+            }
+        });
+
+        ivEditPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getActivity(), "Pesionado", Toast.LENGTH_SHORT).show();
+                Intent activityIntent = new Intent(getActivity(), PasswordChange.class);
+                startActivityForResult(activityIntent, LAUNCH_CHANGE_PASSWORD_ACTIVITY);
             }
         });
 
@@ -97,8 +106,22 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_CHANGE_PASSWORD_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(getActivity(), "El dato es: "+data.getStringExtra("newpass"), Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
+                //Write your code if there's no result
+            }
+        }
+    }
+
     public void setState(FloatingActionButton fabEdit, FloatingActionButton fabDone, EditText editTextPn, EditText editTextUn, EditText editTextEa,
-                         EditText editTextP, Button buttonlogout){
+                         EditText editTextP, Button buttonlogout, ImageView ivEditP){
         if(editTextPn.isEnabled()){
             fabEdit.setImageResource(R.drawable.ic_baseline_edit_24);
             fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorAccent));
@@ -124,6 +147,9 @@ public class ProfileFragment extends Fragment {
             //editTextP.setClickable(false);
             //editTextP.setCursorVisible(false);
             //editTextP.setBackground(null);
+
+            ivEditP.setClickable(false);
+            ivEditP.setVisibility(View.GONE);
 
 
         }else{
@@ -151,6 +177,9 @@ public class ProfileFragment extends Fragment {
             //editTextP.setClickable(true);
             //editTextP.setCursorVisible(true);
             //editTextP.setBackgroundResource(android.R.drawable.edit_text);
+
+            ivEditP.setClickable(true);
+            ivEditP.setVisibility(View.VISIBLE);
 
         }
 

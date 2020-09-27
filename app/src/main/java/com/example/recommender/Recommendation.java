@@ -1,5 +1,7 @@
 package com.example.recommender;
 
+import com.example.recommender.form.Question;
+
 import java.util.ArrayList;
 
 public class Recommendation {

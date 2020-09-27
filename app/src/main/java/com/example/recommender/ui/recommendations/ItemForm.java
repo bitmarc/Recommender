@@ -13,14 +13,18 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.example.recommender.Question;
+import com.example.recommender.form.Form;
+import com.example.recommender.form.Question;
 import com.example.recommender.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSelectedListener {
+
     private ArrayList<Integer> idsContenedores, idsSpiners;
-    private ArrayList<Question> questions;
+    private Form userForm;
+    //private List<Question> questions;
     private TextView title;
     private Spinner spiner;
     private Button imageHint;
@@ -30,12 +34,11 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     private int counter;
 
 
-    public ItemForm(Context context, ArrayList<Question> questions) {
+    public ItemForm(Context context, Form userForm) {
         super(context);
-        System.out.println("Empieza ItemForm");
+        this.userForm=userForm;
         idsContenedores = new ArrayList<>();
         idsSpiners = new ArrayList<>();
-        this.questions = questions;
         this.counter=0;
     }
 
@@ -43,8 +46,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     public void initContainers(Context context, LinearLayout parent) {
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
-        for (int i = 0; i < questions.size(); i++) {
-            parent.addView(createItem(context, questions.get(i)),layoutParamsP);
+        for (int i = 0; i < userForm.getArrQuestions().size(); i++) {
+            parent.addView(createItem(context, userForm.getArrQuestions().get(i)),layoutParamsP);
         }
     }
 
@@ -56,15 +59,21 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         final float scale = context.getResources().getDisplayMetrics().density;
         title = new TextView(context);
         title.setId(View.generateViewId());
-        title.setText(idsContenedores.size()+1+".- "+question.getTittle());
+        title.setText(idsContenedores.size()+1+".- "+question.getTitle());
         LayoutParams tvLp= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         title.setLayoutParams(tvLp);
         contenedor.addView(title);
 
         spiner = new Spinner(context);
         spiner.setId(View.generateViewId());
-        String[] optionsArray = new String[question.getOptions().size()];// inicializo un string de los elementos
-        optionsArray = question.getOptions().toArray(optionsArray);//
+        String[] optionsArray = new String[question.getOptions().size()+1];// inicializo un string de los elementos
+        for(int x=0;x<question.getOptions().size()+1;x++){
+            if(x==0)
+                optionsArray[x]="Selecciona";
+            else
+                optionsArray[x]=question.getOptions().get(x-1).getTitle();
+        }
+        //optionsArray = question.getOptions().toArray(optionsArray);//
         ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiner.setAdapter(ad);
@@ -96,15 +105,15 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         return pixels;
     }
 
-    public ArrayList<Question> getQuestions() {
-        return questions;
+    public List<Question> getQuestions() {
+        return userForm.getArrQuestions();
     }
 
     public boolean getStatus(){
         boolean status= true;
-        for (int j=0;j<questions.size();j++){
-            if(questions.get(j).getAnswer()!=0){
-                System.out.println("correcto "+questions.size()+" j:"+j);
+        for (int j=0;j<userForm.getArrQuestions().size();j++){
+            if(userForm.getArrQuestions().get(j).getAnswer()!=0){
+                System.out.println("correcto "+userForm.getArrQuestions().size()+" j:"+j);
             }else{
                 status=false;
                 break;
@@ -122,8 +131,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         }else{
             for(int i=0;i<idsSpiners.size();i++)
             if(parent.getId()==idsSpiners.get(i)){
-                questions.get(i).setAnswer(position);
-                Toast.makeText(parent.getContext(), "Selected: " + questions.get(i).getTittle(), Toast.LENGTH_LONG).show();
+                userForm.getArrQuestions().get(i).setAnswer(position);
+                Toast.makeText(parent.getContext(), "Selected: " + userForm.getArrQuestions().get(i).getTitle(), Toast.LENGTH_LONG).show();
                 break;
             }
         }
@@ -132,4 +141,6 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
+
+
 }

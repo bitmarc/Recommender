@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+
     public void logout(View view){
         SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
         sessionManagement.removeSession();

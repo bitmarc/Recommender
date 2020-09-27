@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.recommender.User;
+import com.example.recommender.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 
 import java.io.IOException;
@@ -54,7 +55,6 @@ public class ProfileViewModel extends ViewModel {
     //este metodo se ejecuta al finalizar el proceso en segundo plano de la obtencion de datos (getDataUserInBackground)
     public void updateCurrentDataUser(User user){
         userLive.setValue(user);
-        //this.user.setId(user.getId()); // para guardar el id de usuario -- en cuanto maneje session no será necesario
     }
 
     // se ejecuta despues de editar datos (updateDataUserInBackground)
@@ -62,6 +62,7 @@ public class ProfileViewModel extends ViewModel {
         //this.user=user;
         // Cuando maeje el cambio de contraseña, se deberá manejar diferente
         User newActualUser = new User(user.getUsername(),this.user.getPassword(),user.getPersonname(),user.getEmail());
+        newActualUser.setId(this.user.getId());
         this.user=newActualUser;
         refresh();
     }
@@ -75,9 +76,11 @@ public class ProfileViewModel extends ViewModel {
         @Override
         protected User doInBackground(User... users) {
             User userT=new User("connection error","connection error","connection error","connection error");
+            UserResponse userR;
             ConnectionManager cm = new ConnectionManager(user.getUsername(),user.getPassword());
             try {
-                userT=cm.getDataUser(users[0]);
+                userR=cm.getDataUser(users[0]);
+                userT=userR.getUser();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -86,7 +89,6 @@ public class ProfileViewModel extends ViewModel {
 
         @Override
         protected void onPostExecute(User user) {
-            super.onPostExecute(user);
             flag.setValue(false);
             updateCurrentDataUser(user);
         }
@@ -96,10 +98,13 @@ public class ProfileViewModel extends ViewModel {
 
         @Override
         protected User doInBackground(User... users) {
+            UserResponse userR;
             User userT=new User();
             ConnectionManager cm = new ConnectionManager(user.getUsername(),user.getPassword());
             try {
-                userT=cm.updateDataUser(users[0]);
+                userR=cm.updateDataUser(users[0]);
+                if(userR.getMessage().equals("Usuario actualizado correctamente"))
+                    userT=userR.getUser();
             } catch (IOException e) {
                 e.printStackTrace();
             }
