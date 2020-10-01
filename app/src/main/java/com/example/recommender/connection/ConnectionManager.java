@@ -2,8 +2,6 @@ package com.example.recommender.connection;
 
 import android.widget.EditText;
 
-import androidx.annotation.Nullable;
-
 import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.Message;

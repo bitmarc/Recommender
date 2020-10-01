@@ -17,7 +17,7 @@
     <string name="invalid_username">Nombre de usuario debe contener almenos 2 caracteres</string>
     <string name="existing_username">El nombre de usuario ya esta en uso</string>
     <string name="invalid_password">La contraseña debe ser mayor a 5 caracteres</string>
-    <string name="different_password">La contraseña debe ser la misma</string>
+    <string name="invalid_password2">La contraseña debe ser la misma</string>
     <string name="invalid_email">El correo electronico es erroneo</string>
     <string name="login_failed">"Error al inicair sesión"</string>
     <string name="signup_title">Nuevo Registro</string>

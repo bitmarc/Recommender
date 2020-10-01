@@ -32,20 +32,21 @@ public class ProfileFragment extends Fragment {
     private User user;
     public ProgressBar loadingProgressBar;
     private int LAUNCH_CHANGE_PASSWORD_ACTIVITY = 2;
+    private EditText editTextP;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         activity = (MainActivity) getActivity();
-        this.user= activity.getUser();
+        user= activity.getUser();
         profileViewModel = ViewModelProviders.of(this, new ProfileViewModelFactory(user)).get(ProfileViewModel.class);//instanciar la clase ProfileViewModel
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);  // referencia a la actividad raiz
-        final EditText editTextPn = root.findViewById(R.id.editTextPersonName2);                // definir mi variable edittext
+        final EditText editTextPn = root.findViewById(R.id.editTextPersonName2);
         final FloatingActionButton fabEdit = root.findViewById(R.id.floatingActionButton);
         final FloatingActionButton fabDone = root.findViewById(R.id.floatingActionButtonDone);
         final EditText editTextUn = root.findViewById(R.id.editTextTextUserName);
         final EditText editTextEa = root.findViewById(R.id.editTextTextEmailAddress);
-        final EditText editTextP = root.findViewById(R.id.editTextTextPassword);
+        editTextP = root.findViewById(R.id.editTextTextPassword);
         final Button buttonlogout = root.findViewById(R.id.logout);
         final ImageView ivEditPass = root.findViewById(R.id.ivWaring);
         this.loadingProgressBar = root.findViewById(R.id.pBar);
@@ -54,11 +55,10 @@ public class ProfileFragment extends Fragment {
         profileViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User s) {
-                System.out.println("Actualizao !");
                 editTextPn.setText(s.getPersonname());
                 editTextUn.setText(s.getUsername());
                 editTextEa.setText(s.getEmail());
-                editTextP.setText(s.getPassword());
+                editTextP.setText(s.getPassword());// modificado 4.0.7.1
             }
         });
 
@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout,ivEditPass);
+                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,buttonlogout,ivEditPass);// modificado 4.0.7.1
                 profileViewModel.refresh();
             }
         });
@@ -79,15 +79,15 @@ public class ProfileFragment extends Fragment {
                 newUser.setId(user.getId());
                 profileViewModel.updateUser(newUser);
                 activity.setUser(newUser);
-                profileViewModel.refresh();
-                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,editTextP,buttonlogout, ivEditPass);
+                user=newUser;
+                //profileViewModel.refresh();
+                setState(fabEdit,fabDone,editTextPn,editTextUn,editTextEa,buttonlogout, ivEditPass);
             }
         });
 
         ivEditPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getActivity(), "Pesionado", Toast.LENGTH_SHORT).show();
                 Intent activityIntent = new Intent(getActivity(), PasswordChange.class);
                 startActivityForResult(activityIntent, LAUNCH_CHANGE_PASSWORD_ACTIVITY);
             }
@@ -112,6 +112,7 @@ public class ProfileFragment extends Fragment {
         if (requestCode == LAUNCH_CHANGE_PASSWORD_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(getActivity(), "El dato es: "+data.getStringExtra("newpass"), Toast.LENGTH_SHORT).show();
+                editTextP.setText(data.getStringExtra("newpass"));
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
@@ -120,8 +121,8 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void setState(FloatingActionButton fabEdit, FloatingActionButton fabDone, EditText editTextPn, EditText editTextUn, EditText editTextEa,
-                         EditText editTextP, Button buttonlogout, ImageView ivEditP){
+    public void setState(FloatingActionButton fabEdit, FloatingActionButton fabDone, EditText editTextPn, EditText editTextUn,
+                         EditText editTextEa, Button buttonlogout, ImageView ivEditP){
         if(editTextPn.isEnabled()){
             fabEdit.setImageResource(R.drawable.ic_baseline_edit_24);
             fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorAccent));
@@ -142,11 +143,6 @@ public class ProfileFragment extends Fragment {
             editTextEa.setClickable(false);
             editTextEa.setCursorVisible(false);
             editTextEa.setBackground(null);
-
-            //editTextP.setEnabled(false);
-            //editTextP.setClickable(false);
-            //editTextP.setCursorVisible(false);
-            //editTextP.setBackground(null);
 
             ivEditP.setClickable(false);
             ivEditP.setVisibility(View.GONE);
@@ -172,11 +168,6 @@ public class ProfileFragment extends Fragment {
             editTextEa.setClickable(true);
             editTextEa.setCursorVisible(true);
             editTextEa.setBackgroundResource(android.R.drawable.edit_text);
-
-            //editTextP.setEnabled(true);
-            //editTextP.setClickable(true);
-            //editTextP.setCursorVisible(true);
-            //editTextP.setBackgroundResource(android.R.drawable.edit_text);
 
             ivEditP.setClickable(true);
             ivEditP.setVisibility(View.VISIBLE);

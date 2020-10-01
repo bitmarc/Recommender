@@ -21,6 +21,7 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> password;
     private MutableLiveData<Boolean> flag;
     User user;
+    User newUser;
 
 
     public ProfileViewModel(User user) {
@@ -32,6 +33,7 @@ public class ProfileViewModel extends ViewModel {
         userLive = new MutableLiveData<>();
         flag = new MutableLiveData<>();
         flag.setValue(false);
+        this.newUser= new User();
     }
 
     public LiveData<Boolean> getPbarValue(){
@@ -44,6 +46,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public void updateUser(User newUser){
+        this.newUser=newUser;
         new updateDataUserInBackground().execute(newUser);
     }
 
@@ -54,16 +57,14 @@ public class ProfileViewModel extends ViewModel {
 
     //este metodo se ejecuta al finalizar el proceso en segundo plano de la obtencion de datos (getDataUserInBackground)
     public void updateCurrentDataUser(User user){
+        user.setPassword(this.user.getPassword());
         userLive.setValue(user);
     }
 
     // se ejecuta despues de editar datos (updateDataUserInBackground)
-    private void updateThisUser(User user){
-        //this.user=user;
-        // Cuando maeje el cambio de contraseña, se deberá manejar diferente
-        User newActualUser = new User(user.getUsername(),this.user.getPassword(),user.getPersonname(),user.getEmail());
-        newActualUser.setId(this.user.getId());
-        this.user=newActualUser;
+    private void updateThisUser(User newUser){
+        this.newUser.setId(newUser.getId());
+        this.user=this.newUser;
         refresh();
     }
 
@@ -95,6 +96,10 @@ public class ProfileViewModel extends ViewModel {
     }
 
     class updateDataUserInBackground extends AsyncTask<User, Void, User>{
+        @Override
+        protected void onPreExecute() {
+            flag.setValue(true);
+        }
 
         @Override
         protected User doInBackground(User... users) {
@@ -113,7 +118,9 @@ public class ProfileViewModel extends ViewModel {
 
         @Override
         protected void onPostExecute(User user) {
-            super.onPostExecute(user);
+            flag.setValue(false);
+            //user.setPassword(newUser.getPassword());
+            //user.setId(newUser.getId());
             updateThisUser(user); //actualizar usuario en la clase y main
         }
     }

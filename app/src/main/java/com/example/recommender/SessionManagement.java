@@ -49,7 +49,6 @@ public class SessionManagement {
         //save session of user whenever user is logged in
         editor.putString(USERNAME,user.getUsername()).commit();
         editor.putString(SESSION_KEY,user.getId()).commit();
-        //TODO hasta que no maneje el cambio de contraseña
-        //editor.putString(PASSWORD, user.getPassword()).commit();
+        editor.putString(PASSWORD, user.getPassword()).commit();
     }
 }

@@ -16,13 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import android.view.KeyEvent;
-import android.widget.Toast;
-
-import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.Message;
 import com.example.recommender.R;
-import com.example.recommender.User;
 import com.example.recommender.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 
@@ -30,13 +26,11 @@ import com.example.recommender.connection.ConnectionManager;
 public class SignupActivity extends AppCompatActivity {
     private SignupViewModel signupViewModel;
     private Button signupButton;
-    private Button petB;
     private EditText persoNameEditText;
     private EditText usernameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText passwordRepEditText;
-    private User newUser;
     ConnectionManager cm;
 
 
@@ -71,7 +65,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 if (signupFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(signupFormState.getPasswordError()));
-                    passwordRepEditText.setError(getString(R.string.different_password));
+                    passwordRepEditText.setError(getString(R.string.invalid_password2));
                 }
                 if (signupFormState.getEmailError() != null){
                     emailEditText.setError(getString(signupFormState.getEmailError()));
@@ -100,16 +94,13 @@ public class SignupActivity extends AppCompatActivity {
 
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
+        passwordRepEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    signupViewModel.signup(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", newUser.getUsername());
-                    setResult(Activity.RESULT_OK,returnIntent);
-                    finish();
+                    //signupViewModel.signup(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                    verificar();
                 }
                 return false;
             }
