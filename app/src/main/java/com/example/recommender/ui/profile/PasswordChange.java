@@ -15,8 +15,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.recommender.MainActivity;
 import com.example.recommender.R;
+import com.example.recommender.SessionManagement;
 
 public class PasswordChange extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class PasswordChange extends AppCompatActivity {
     private EditText pass1;
     private EditText pass2;
     private PasswordChangeViewModel passwordChangeViewModel;
-
+    SessionManagement sessionManagement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class PasswordChange extends AppCompatActivity {
         this.pass2= findViewById(R.id.idEtNewPass2);
         this.actualPass = findViewById(R.id.idEtOladPass);
         this.pass1 = findViewById(R.id.idEtNewPass);
+        sessionManagement = new SessionManagement(PasswordChange.this);
 
         passwordChangeViewModel= ViewModelProviders.of(this).get(PasswordChangeViewModel.class);
 
@@ -83,11 +87,16 @@ public class PasswordChange extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    //signupViewModel.signup(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-                    Intent intent = new Intent();
-                    intent.putExtra("newpass",pass2.getText().toString());
-                    setResult(Activity.RESULT_OK, intent); // You can also send result without any data using setResult(int resultCode)
-                    finish();
+                    if(validatePassword(actualPass.getText().toString())){
+                        Intent intent = new Intent();
+                        intent.putExtra("newpass",pass2.getText().toString());
+                        setResult(Activity.RESULT_OK, intent); // You can also send result without any data using setResult(int resultCode)
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(PasswordChange.this, "Contraseña de usuario incorrecta, verificala porfavor", Toast.LENGTH_SHORT).show();
+                        actualPass.setError(getString(R.string.error_password));
+                    }
                 }
                 return false;
             }
@@ -96,14 +105,29 @@ public class PasswordChange extends AppCompatActivity {
         bchangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("newpass",pass2.getText().toString());
-                setResult(Activity.RESULT_OK, intent); // You can also send result without any data using setResult(int resultCode)
-                finish();
+                if(validatePassword(actualPass.getText().toString())){
+                    Intent intent = new Intent();
+                    intent.putExtra("newpass",pass2.getText().toString());
+                    setResult(Activity.RESULT_OK, intent); // You can also send result without any data using setResult(int resultCode)
+                    finish();
+                }
+                else{
+                    Toast.makeText(PasswordChange.this, "Contraseña de usuario incorrecta, verificala porfavor", Toast.LENGTH_SHORT).show();
+                    actualPass.setError(getString(R.string.error_password));
+                }
+
             }
         });
-    }
 
+
+    }
+    public boolean validatePassword(String password){
+        String pass=sessionManagement.getUser().getPassword();
+        if(password.equals(pass))
+            return true;
+        else
+            return false;
+    }
 
 
 }

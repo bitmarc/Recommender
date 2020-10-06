@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.recommender.R;
-import com.example.recommender.ui.profile.ProfileViewModel;
 
 public class HistoryFragment extends Fragment {
 
@@ -26,18 +25,13 @@ public class HistoryFragment extends Fragment {
                 ViewModelProviders.of(this).get(HistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         final TextView textView = root.findViewById(R.id.text_history);
-        final Button changeValue = root.findViewById(R.id.change);
+        LinearLayout lparent = root.findViewById(R.id.idLinearLRows);
+        ItemResult itres = new ItemResult(getContext(),8);
+        itres.initContainers(lparent);
         historyViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
-            }
-        });
-
-        changeValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                historyViewModel.changeValue("hola");
             }
         });
 
