@@ -1,9 +1,7 @@
 package com.example.recommender.ui.profile;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.recommender.MainActivity;
 import com.example.recommender.R;
-import com.example.recommender.User;
+import com.example.recommender.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileFragment extends Fragment {

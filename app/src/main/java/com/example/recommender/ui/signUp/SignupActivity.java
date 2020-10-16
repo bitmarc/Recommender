@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import android.view.KeyEvent;
 import com.example.recommender.Interface.MyCallback;
-import com.example.recommender.Message;
+import com.example.recommender.entities.Message;
 import com.example.recommender.R;
-import com.example.recommender.UserResponse;
+import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 
 

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.profile.PasswordChange"></activity>
+        <activity android:name=".ui.recommendations.RecomResult"></activity>
+        <activity android:name=".ui.profile.PasswordChange" />
         <activity
             android:name=".PreStartActivity"
             android:theme="@android:style/Theme.NoDisplay">

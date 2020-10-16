@@ -1,4 +1,4 @@
-package com.example.recommender;
+package com.example.recommender.entities;
 
 import com.example.recommender.form.Question;
 

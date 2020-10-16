@@ -2,7 +2,10 @@ package com.example.recommender;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-    // clase destinada a manejar el guardado de la sesión implementando shared preferences.
+
+import com.example.recommender.entities.User;
+
+// clase destinada a manejar el guardado de la sesión implementando shared preferences.
 public class SessionManagement {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;

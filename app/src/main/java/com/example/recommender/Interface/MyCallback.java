@@ -1,8 +1,7 @@
 package com.example.recommender.Interface;
 
-import com.example.recommender.Message;
-import com.example.recommender.User;
-import com.example.recommender.UserResponse;
+import com.example.recommender.entities.Message;
+import com.example.recommender.retrofit.models.UserResponse;
 
 public interface MyCallback {
     void onDataGot(Message number);

@@ -4,13 +4,12 @@ import android.widget.EditText;
 
 import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
-import com.example.recommender.Message;
-import com.example.recommender.User;
-import com.example.recommender.UserResponse;
+import com.example.recommender.entities.Message;
+import com.example.recommender.entities.User;
+import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
 
 import java.io.IOException;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;

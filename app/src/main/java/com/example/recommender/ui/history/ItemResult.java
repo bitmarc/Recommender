@@ -2,6 +2,7 @@ package com.example.recommender.ui.history;
 // clase para generar items de resultaods de manera dinamica.
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -11,30 +12,35 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+
 import java.util.ArrayList;
 
-public class ItemResult extends ConstraintLayout implements View.OnClickListener{
+public class ItemResult extends ConstraintLayout{
     private Context context;
     private int userResults;
     private LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    private ArrayList<Integer> idsContenedores, idsBtnForm, idsBtnRes;
+    private ArrayList<String> idsRes;
+    private ArrayList<Button> btnRes, btnForm;
+
 
     public ItemResult(Context context, int userResults){
         super(context);
         this.context=context;
         this.userResults=userResults;
-        idsContenedores = new ArrayList<>();
-        idsBtnForm = new ArrayList<>();
-        idsBtnRes = new ArrayList<>();
+        idsRes = new ArrayList<>();
+        btnForm = new ArrayList<>();
+        btnRes = new ArrayList<>();
     }
 
-    public void initContainers(LinearLayout parent) {
+    public ResultContainer initContainers(LinearLayout parent) {
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(30,scale), 0, 0);
         for (int i = 0; i < userResults; i++) {
             parent.addView(createItem(context),layoutParamsP); //objeto result en lugar de question
         }
+        ResultContainer rc = new ResultContainer(idsRes,btnForm,btnRes);
+        return rc;
     }
 
     private ConstraintLayout createItem(Context context) {
@@ -48,6 +54,7 @@ public class ItemResult extends ConstraintLayout implements View.OnClickListener
         numResult.setText("Resultado #1325"); // question.getTitle() ahora se coambia por user result
         numResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(numResult);
+        idsRes.add(numResult.getText().toString());
 
         TextView dateTime = new TextView(context);
         dateTime.setId(View.generateViewId());
@@ -72,16 +79,14 @@ public class ItemResult extends ConstraintLayout implements View.OnClickListener
         bForm.setText("Ver formulario");
         bForm.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(bForm);
-        idsBtnForm.add(bForm.getId());
-        bForm.setOnClickListener(this);
+        btnForm.add(bForm);
 
         Button bResult = new Button(context);
         bResult.setId(View.generateViewId());
         bResult.setText("Ver recomendaciones");
         bResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(bResult);
-        idsBtnRes.add(bResult.getId());
-        bResult.setOnClickListener(this);
+        btnRes.add(bResult);
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(contenedor);
@@ -105,7 +110,6 @@ public class ItemResult extends ConstraintLayout implements View.OnClickListener
         constraintSet.connect(bResult.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(bResult.getId(), constraintSet.TOP, bForm.getId(), constraintSet.BOTTOM);
         constraintSet.applyTo(contenedor);
-        idsContenedores.add(contenedor.getId());
         return contenedor;
     }
 
@@ -114,23 +118,5 @@ public class ItemResult extends ConstraintLayout implements View.OnClickListener
         return pixels;
     }
 
-    private void loadForms(int idButton){
-        System.out.println("id form:"+idButton);
-    }
-    private void loadRecom(int idButton){
-        System.out.println("id recom:"+idButton);
-    }
 
-    @Override
-    public void onClick(View view) {
-        for(int x = 0; x<idsContenedores.size() ; x++){
-            if(view.getId()==idsBtnForm.get(x)){
-                loadForms(view.getId());
-                break;
-            }else if(view.getId()==idsBtnRes.get(x)){
-                loadRecom(view.getId());
-                break;
-            }
-        }
-    }
 }

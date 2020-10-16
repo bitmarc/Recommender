@@ -1,5 +1,7 @@
 package com.example.recommender.ui.recommendations;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,15 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.recommender.User;
-import com.example.recommender.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.form.Form;
 import com.example.recommender.form.Question;
 import com.example.recommender.R;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendationsFragment extends Fragment {
@@ -37,6 +36,22 @@ public class RecommendationsFragment extends Fragment {
     private Button sendB;
     private ProgressBar pbLoading;
     private ItemForm form;
+    private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY = 3;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(getActivity(), "El dato es: "+data.getStringExtra("newpass"), Toast.LENGTH_SHORT).show();
+                //editTextP.setText(data.getStringExtra("newpass"));
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
+                //Write your code if there's no result
+            }
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -66,6 +81,9 @@ public class RecommendationsFragment extends Fragment {
                 if(form.getStatus()){
                     preguntas=form.getQuestions();
                     Toast.makeText(getActivity(), "Lanzar recomendacion ", Toast.LENGTH_LONG).show();
+                    Intent activityIntent = new Intent(getActivity(), RecomResult.class);
+                    activityIntent.putExtra("idResult", "Resultado R-231020-0123"); // AQUI EL VALOR ERA idRes
+                    startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
                 }else{
                     Toast.makeText(getActivity(), "Faltan campos por llenar: ", Toast.LENGTH_LONG).show();
                 }
@@ -86,6 +104,7 @@ public class RecommendationsFragment extends Fragment {
         return root;
     }
 
+
     public void setForm(Form userForm){
         if(userForm.getId()!=null){
             Toast.makeText(getActivity(), "Exito", Toast.LENGTH_SHORT).show();
@@ -95,6 +114,7 @@ public class RecommendationsFragment extends Fragment {
         else
         System.out.println("objeto form vacio");
     }
+
 
     class getUserFormInBackground extends AsyncTask<Void, Void, Form> {
         @Override

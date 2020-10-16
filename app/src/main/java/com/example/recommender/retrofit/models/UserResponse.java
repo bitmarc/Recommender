@@ -1,4 +1,6 @@
-package com.example.recommender;
+package com.example.recommender.retrofit.models;
+
+import com.example.recommender.entities.User;
 
 public class UserResponse {
     private User user;

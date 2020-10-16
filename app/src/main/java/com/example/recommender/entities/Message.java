@@ -1,4 +1,4 @@
-package com.example.recommender;
+package com.example.recommender.entities;
 
 public class Message {
     private String message;

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.recommender.User;
+import com.example.recommender.entities.User;
 
 /*Clase necesaria con el proposito de pasar parametros como argumentos
  de la calse view model */

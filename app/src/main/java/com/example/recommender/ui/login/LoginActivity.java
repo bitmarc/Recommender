@@ -28,7 +28,7 @@ import com.example.recommender.MainActivity;
 import com.example.recommender.R;
 import com.example.recommender.SessionManagement;
 import com.example.recommender.ui.signUp.SignupActivity;
-import com.example.recommender.User;
+import com.example.recommender.entities.User;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;

@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.recommender.MainActivity;
 import com.example.recommender.R;
-import com.example.recommender.User;
+import com.example.recommender.entities.User;
 
 public class HomeFragment extends Fragment {
 

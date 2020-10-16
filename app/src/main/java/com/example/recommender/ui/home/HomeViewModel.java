@@ -1,13 +1,12 @@
 package com.example.recommender.ui.home;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.recommender.User;
+import com.example.recommender.entities.User;
 import com.example.recommender.connection.ConnectionManager;
 
 import java.io.IOException;

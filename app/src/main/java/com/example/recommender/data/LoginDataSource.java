@@ -1,7 +1,6 @@
 package com.example.recommender.data;
 
-import com.example.recommender.User;
-import com.example.recommender.UserResponse;
+import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.data.model.LoggedInUser;
 

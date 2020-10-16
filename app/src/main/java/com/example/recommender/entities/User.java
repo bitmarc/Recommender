@@ -1,4 +1,4 @@
-package com.example.recommender;
+package com.example.recommender.entities;
 
 // Clase usuario para manejaar objetos referentes a la informacion del usuario loggeado.
 public class User {

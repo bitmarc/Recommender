@@ -1,8 +1,8 @@
 package com.example.recommender.Interface;
 
-import com.example.recommender.Message;
-import com.example.recommender.User;
-import com.example.recommender.UserResponse;
+import com.example.recommender.entities.Message;
+import com.example.recommender.entities.User;
+import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
 
 import retrofit2.Call;
