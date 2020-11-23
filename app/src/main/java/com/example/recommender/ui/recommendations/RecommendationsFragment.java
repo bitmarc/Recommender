@@ -58,6 +58,7 @@ public class RecommendationsFragment extends Fragment {
         recommendationsViewModel = ViewModelProviders.of(this).get(RecommendationsViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_recommendations, container, false);
+
         title_form = root.findViewById(R.id.text_recommendations);
         BtnStart = root.findViewById(R.id.idBsttart);
         sendB = root.findViewById(R.id.sendB);
@@ -100,7 +101,6 @@ public class RecommendationsFragment extends Fragment {
                 new getUserFormInBackground().execute();
             }
         });
-
         return root;
     }
 

@@ -1,9 +1,11 @@
 package com.example.recommender.Interface;
 
 import com.example.recommender.entities.Message;
+import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
 import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
+import com.example.recommender.ui.recommendations.RecomResult;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -37,5 +39,6 @@ public interface JsonApi {
     @GET("form")
     Call<Form> getform();
 
-
+    @POST("recom")
+    Call<Recommendation> getRecom(@Body Form form);
 }

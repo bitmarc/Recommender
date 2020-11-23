@@ -5,6 +5,7 @@ import android.widget.EditText;
 import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.entities.Message;
+import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
 import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
@@ -32,7 +33,7 @@ public class ConnectionManager {
                 .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:5000/")
+                .baseUrl("http://192.168.0.104:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -46,7 +47,7 @@ public class ConnectionManager {
                 .addInterceptor(loggingInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:5000/")
+                .baseUrl("http://192.168.0.104:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -149,6 +150,13 @@ public class ConnectionManager {
         Call<Form> call = jsonApi.getform();
         userForm = call.execute().body();
         return userForm;
+    }
+
+    public Recommendation getRecommendation(Form form) throws IOException {
+        Recommendation resultRecommendation = new Recommendation();
+        Call<Recommendation> call = jsonApi.getRecom(form);
+        resultRecommendation = call.execute().body();
+        return resultRecommendation;
     }
 
 
