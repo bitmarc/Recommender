@@ -32,6 +32,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     private LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private int counter;
+    List<List<Integer>> dynamic2D = new ArrayList<List<Integer>>(); //almaceno los id's de cada respuesta para recuperarlos mediante su posicion
 
 
     public ItemForm(Context context, Form userForm) {
@@ -47,11 +48,12 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         for (int i = 0; i < userForm.getArrQuestions().size(); i++) {
-            parent.addView(createItem(context, userForm.getArrQuestions().get(i)),layoutParamsP);
+            dynamic2D.add(new ArrayList<Integer>());
+            parent.addView(createItem(context, userForm.getArrQuestions().get(i),i),layoutParamsP);
         }
     }
 
-    private ConstraintLayout createItem(Context context, Question question) {
+    private ConstraintLayout createItem(Context context, Question question,int count) {
         contenedor = new ConstraintLayout(context);
         contenedor.setId(View.generateViewId());
         contenedor.setLayoutParams(layoutParamsContainer);
@@ -68,10 +70,13 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         spiner.setId(View.generateViewId());
         String[] optionsArray = new String[question.getOptions().size()+1];// inicializo un string de los elementos
         for(int x=0;x<question.getOptions().size()+1;x++){
+
             if(x==0)
                 optionsArray[x]="Selecciona";
-            else
+            else{
                 optionsArray[x]=question.getOptions().get(x-1).getTitle();
+                dynamic2D.get(count).add(Integer.parseInt(question.getOptions().get(x-1).getId()));}
+
         }
         //optionsArray = question.getOptions().toArray(optionsArray);//
         ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
@@ -108,6 +113,9 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     public List<Question> getQuestions() {
         return userForm.getArrQuestions();
     }
+    public Form getForm() {
+        return userForm;
+    }
 
     public boolean getStatus(){
         boolean status= true;
@@ -124,15 +132,14 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // TODO Auto-generated method stub
         if(parent.getItemAtPosition(position).equals("Selecciona")){
             System.out.println("Elemento invalido");
             //do nothing
         }else{
             for(int i=0;i<idsSpiners.size();i++)
             if(parent.getId()==idsSpiners.get(i)){
-                userForm.getArrQuestions().get(i).setAnswer(position);
-                Toast.makeText(parent.getContext(), "Selected: " + userForm.getArrQuestions().get(i).getTitle(), Toast.LENGTH_LONG).show();
+                userForm.getArrQuestions().get(i).setAnswer(dynamic2D.get(i).get(position-1));//antes solo guardaba la posicion 1-3
+                Toast.makeText(parent.getContext(), "Selected: " + userForm.getArrQuestions().get(i).getTitle()+" id_POS: "+dynamic2D.get(i).get(position-1), Toast.LENGTH_LONG).show();
                 break;
             }
         }

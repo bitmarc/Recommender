@@ -1,6 +1,8 @@
 package com.example.recommender.form;
 
-public class Option {
+import java.io.Serializable;
+
+public class Option implements Serializable {
 
     String title;
     String id;

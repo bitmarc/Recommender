@@ -7,13 +7,19 @@ import androidx.lifecycle.ViewModel;
 public class RecommendationsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
+    private MutableLiveData<Boolean> falgForm; //formulario
 
-    public RecommendationsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("");
+    public RecommendationsViewModel() { //CONSTRUCTOR
+        falgForm = new MutableLiveData<>();
+        falgForm.setValue(false);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+
+    public LiveData<Boolean> SetUI() {
+        return falgForm;
+    }
+
+    public void changeUI(boolean var){
+        this.falgForm.setValue(var);
     }
 }

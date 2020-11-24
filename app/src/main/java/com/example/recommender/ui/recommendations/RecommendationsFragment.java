@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.recommender.connection.ConnectionManager;
@@ -28,7 +30,7 @@ import java.util.List;
 public class RecommendationsFragment extends Fragment {
 
     private RecommendationsViewModel recommendationsViewModel;
-    private List<Question> preguntas;
+    private Form formResponse;
     private LinearLayout containerP;
     private TextView bienvenida;
     private TextView title_form;
@@ -68,22 +70,31 @@ public class RecommendationsFragment extends Fragment {
 
         //final ItemForm form = new ItemForm(getActivity(),preguntas);
 
-/*        recommendationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        recommendationsViewModel.SetUI().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                sendB.setVisibility(View.GONE);
-                title_form.setText(s);
+            public void onChanged(Boolean s) {
+                if(s){
+                    containerP.removeAllViewsInLayout();
+                    title_form.setVisibility(View.VISIBLE);
+                    sendB.setVisibility(View.VISIBLE);
+                    new getUserFormInBackground().execute();
+                }
+                else{
+                    //containerP.removeAllViewsInLayout();
+                    // agregar un restaurador de vista
+                    title_form.setVisibility(View.INVISIBLE);
+                    sendB.setVisibility(View.INVISIBLE);
+                }
             }
-        });*/
+        });
 
         sendB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(form.getStatus()){
-                    preguntas=form.getQuestions();
-                    Toast.makeText(getActivity(), "Lanzar recomendacion ", Toast.LENGTH_LONG).show();
+                    formResponse=form.getForm();
                     Intent activityIntent = new Intent(getActivity(), RecomResult.class);
-                    activityIntent.putExtra("idResult", "Resultado R-231020-0123"); // AQUI EL VALOR ERA idRes
+                    activityIntent.putExtra("Form",formResponse); // AQUI EL VALOR ERA idRes
                     startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
                 }else{
                     Toast.makeText(getActivity(), "Faltan campos por llenar: ", Toast.LENGTH_LONG).show();
@@ -91,20 +102,15 @@ public class RecommendationsFragment extends Fragment {
             }
         });
 
-
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                containerP.removeAllViewsInLayout();
-                title_form.setVisibility(View.VISIBLE);
-                sendB.setVisibility(View.VISIBLE);
-                new getUserFormInBackground().execute();
+                recommendationsViewModel.changeUI(true);
             }
         });
         return root;
     }
-
-
+    // ********************************************************************************** METHOD SETFORM
     public void setForm(Form userForm){
         if(userForm.getId()!=null){
             Toast.makeText(getActivity(), "Exito", Toast.LENGTH_SHORT).show();
@@ -114,8 +120,7 @@ public class RecommendationsFragment extends Fragment {
         else
         System.out.println("objeto form vacio");
     }
-
-
+    // ********************************************************************************** CLASS GET FORM INBACKGROUND
     class getUserFormInBackground extends AsyncTask<Void, Void, Form> {
         @Override
         protected void onPreExecute() {

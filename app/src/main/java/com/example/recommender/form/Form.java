@@ -1,9 +1,10 @@
 package com.example.recommender.form;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Form {
+public class Form implements Serializable {
     private String id;
     private List<Question> questions;
 
@@ -11,7 +12,6 @@ public class Form {
         this.id = id;
         this.questions = questions;
     }
-
     public Form() {
     }
 
