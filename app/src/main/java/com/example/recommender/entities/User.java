@@ -1,7 +1,9 @@
 package com.example.recommender.entities;
 
+import java.io.Serializable;
+
 // Clase usuario para manejaar objetos referentes a la informacion del usuario loggeado.
-public class User {
+public class User implements Serializable {
 
     private String id;
     private String username;

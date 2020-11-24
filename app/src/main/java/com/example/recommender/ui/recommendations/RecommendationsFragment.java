@@ -19,7 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.recommender.MainActivity;
 import com.example.recommender.connection.ConnectionManager;
+import com.example.recommender.entities.User;
 import com.example.recommender.form.Form;
 import com.example.recommender.form.Question;
 import com.example.recommender.R;
@@ -38,6 +40,8 @@ public class RecommendationsFragment extends Fragment {
     private Button sendB;
     private ProgressBar pbLoading;
     private ItemForm form;
+    private MainActivity activity;
+    private User user;
     private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY = 3;
 
     @Override
@@ -58,7 +62,8 @@ public class RecommendationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         recommendationsViewModel = ViewModelProviders.of(this).get(RecommendationsViewModel.class);
-
+        activity = (MainActivity) getActivity();
+        user= activity.getUser();
         View root = inflater.inflate(R.layout.fragment_recommendations, container, false);
 
         title_form = root.findViewById(R.id.text_recommendations);
@@ -95,6 +100,7 @@ public class RecommendationsFragment extends Fragment {
                     formResponse=form.getForm();
                     Intent activityIntent = new Intent(getActivity(), RecomResult.class);
                     activityIntent.putExtra("Form",formResponse); // AQUI EL VALOR ERA idRes
+                    activityIntent.putExtra("User",user);
                     startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
                 }else{
                     Toast.makeText(getActivity(), "Faltan campos por llenar: ", Toast.LENGTH_LONG).show();

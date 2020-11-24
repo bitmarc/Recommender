@@ -3,6 +3,7 @@ package com.example.recommender.Interface;
 import com.example.recommender.entities.Message;
 import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
+import com.example.recommender.retrofit.models.RecommendationRequest;
 import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
 import com.example.recommender.ui.recommendations.RecomResult;
@@ -40,5 +41,5 @@ public interface JsonApi {
     Call<Form> getform();
 
     @POST("recom")
-    Call<Recommendation> getRecom(@Body Form form);
+    Call<Recommendation> getRecom(@Body RecommendationRequest Rreq);
 }
