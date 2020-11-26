@@ -1,6 +1,7 @@
 package com.example.recommender.ui.recommendations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,11 +24,9 @@ import com.example.recommender.MainActivity;
 import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.entities.User;
 import com.example.recommender.form.Form;
-import com.example.recommender.form.Question;
 import com.example.recommender.R;
 
 import java.io.IOException;
-import java.util.List;
 
 public class RecommendationsFragment extends Fragment {
 
@@ -49,14 +48,35 @@ public class RecommendationsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "El dato es: "+data.getStringExtra("newpass"), Toast.LENGTH_SHORT).show();
-                //editTextP.setText(data.getStringExtra("newpass"));
+                Toast.makeText(getActivity(), "Limpiar pantalla ", Toast.LENGTH_SHORT).show();
+                recommendationsViewModel.changeUI(false);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
-                //Write your code if there's no result
             }
         }
+    }
+
+    private void restoreScreen(Context context, LinearLayout parent) {
+        LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        float scale = context.getResources().getDisplayMetrics().density;
+        layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
+        bienvenida = new TextView(context);
+        bienvenida.setId(View.generateViewId());
+        bienvenida.setText("Para recibir recomendaciones, deberás completar el\n" +
+                "        formulario que se te precentará a continuación, el cuál tiene el propósito de identificar\n" +
+                "        tu perfil de usuario y con base en este, proporcionarte resultados personalizados");
+        parent.addView(bienvenida);
+        BtnStart = new Button(context);
+        BtnStart.setId(View.generateViewId());
+        BtnStart.setText("Empezar");
+        BtnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recommendationsViewModel.changeUI(true);
+            }
+        });
+        parent.addView(BtnStart);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,10 +90,7 @@ public class RecommendationsFragment extends Fragment {
         BtnStart = root.findViewById(R.id.idBsttart);
         sendB = root.findViewById(R.id.sendB);
         containerP = root.findViewById(R.id.containerP);
-        bienvenida = root.findViewById(R.id.title1);
         pbLoading = root.findViewById(R.id.pbLoading);
-
-        //final ItemForm form = new ItemForm(getActivity(),preguntas);
 
         recommendationsViewModel.SetUI().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -85,8 +102,8 @@ public class RecommendationsFragment extends Fragment {
                     new getUserFormInBackground().execute();
                 }
                 else{
-                    //containerP.removeAllViewsInLayout();
-                    // agregar un restaurador de vista
+                    containerP.removeAllViewsInLayout();
+                    restoreScreen(getActivity(),containerP);
                     title_form.setVisibility(View.INVISIBLE);
                     sendB.setVisibility(View.INVISIBLE);
                 }
@@ -150,6 +167,10 @@ public class RecommendationsFragment extends Fragment {
             setForm(form);
             pbLoading.setVisibility(View.GONE);
         }
+    }
+    private int toPixels(int dp, float scale) {
+        int pixels = (int) (dp * scale + 0.5f);
+        return pixels;
     }
 }
 

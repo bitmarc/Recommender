@@ -7,12 +7,16 @@ import java.util.ArrayList;
 public class Recommendation {
 
     private int idRecommendation;
-    //private User usuerOb;
-    //private ArrayList<Automobile> results;
-    //private ArrayList<Question> form;
-    //private String profile;
+    private ArrayList<Automobile> results;
+    private Profile profile;
 
     public Recommendation(){
+    }
+
+    public Recommendation(int idRecommendation, ArrayList<Automobile> results, Profile profile) {
+        this.idRecommendation = idRecommendation;
+        this.results = results;
+        this.profile = profile;
     }
 
     public int getIdRecommendation() {
@@ -21,14 +25,6 @@ public class Recommendation {
 
     public void setIdRecommendation(int idRecommendation) {
         this.idRecommendation = idRecommendation;
-    }
-/*
-    public User getUsuerOb() {
-        return usuerOb;
-    }
-
-    public void setUsuerOb(User usuerOb) {
-        this.usuerOb = usuerOb;
     }
 
     public ArrayList<Automobile> getResults() {
@@ -39,20 +35,11 @@ public class Recommendation {
         this.results = results;
     }
 
-    public ArrayList<Question> getForm() {
-        return form;
-    }
-
-    public void setForm(ArrayList<Question> form) {
-        this.form = form;
-    }
-
-    public String getProfile() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
-*/
 }

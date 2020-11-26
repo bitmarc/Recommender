@@ -24,7 +24,6 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
     private ArrayList<Integer> idsContenedores, idsSpiners;
     private Form userForm;
-    //private List<Question> questions;
     private TextView title;
     private Spinner spiner;
     private Button imageHint;
