@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class ResultContainer {
 
-    private ArrayList<String> idsRes;
+    //private ArrayList<String> idsRes;
     private ArrayList<Button> buttonForm;
     private ArrayList<Button> buttonRecom;
 
-    public ResultContainer(ArrayList<String> idsRes, ArrayList<Button> buttonForm, ArrayList<Button> buttonRecom){
+    public ResultContainer(ArrayList<Button> buttonForm, ArrayList<Button> buttonRecom){
 
-        this.idsRes=idsRes;
+        //this.idsRes=idsRes;
         this.buttonForm=buttonForm;
         this.buttonRecom=buttonRecom;
     }
 
-
+/*
     public ArrayList<String> getIdsRes() {
         return idsRes;
     }
@@ -25,7 +25,7 @@ public class ResultContainer {
     public void setIdsRes(ArrayList<String> idsRes) {
         this.idsRes = idsRes;
     }
-
+*/
     public ArrayList<Button> getButtonForm() {
         return buttonForm;
     }

@@ -1,6 +1,8 @@
 package com.example.recommender.entities;
 
-public class Automobile {
+import java.io.Serializable;
+
+public class Automobile implements Serializable {
 
     private int id;
     private String brand;

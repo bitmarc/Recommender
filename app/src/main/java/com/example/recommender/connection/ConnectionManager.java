@@ -7,6 +7,7 @@ import com.example.recommender.Interface.MyCallback;
 import com.example.recommender.entities.Message;
 import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
+import com.example.recommender.retrofit.models.History;
 import com.example.recommender.retrofit.models.RecommendationRequest;
 import com.example.recommender.retrofit.models.UserResponse;
 import com.example.recommender.form.Form;
@@ -160,4 +161,10 @@ public class ConnectionManager {
         return resultRecommendation;
     }
 
+    public History getHistory() throws IOException {
+        History reqHistory = new History();
+        Call<History> call = jsonApi.getHistory();
+        reqHistory = call.execute().body();
+        return reqHistory;
+    }
 }

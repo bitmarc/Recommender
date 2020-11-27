@@ -118,6 +118,7 @@ public class RecommendationsFragment extends Fragment {
                     Intent activityIntent = new Intent(getActivity(), RecomResult.class);
                     activityIntent.putExtra("Form",formResponse); // AQUI EL VALOR ERA idRes
                     activityIntent.putExtra("User",user);
+                    activityIntent.putExtra("type", "request");
                     startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
                 }else{
                     Toast.makeText(getActivity(), "Faltan campos por llenar: ", Toast.LENGTH_LONG).show();
@@ -168,6 +169,7 @@ public class RecommendationsFragment extends Fragment {
             pbLoading.setVisibility(View.GONE);
         }
     }
+
     private int toPixels(int dp, float scale) {
         int pixels = (int) (dp * scale + 0.5f);
         return pixels;

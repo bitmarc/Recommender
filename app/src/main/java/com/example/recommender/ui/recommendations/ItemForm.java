@@ -74,7 +74,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
                 optionsArray[x]="Selecciona";
             else{
                 optionsArray[x]=question.getOptions().get(x-1).getTitle();
-                dynamic2D.get(count).add(Integer.parseInt(question.getOptions().get(x-1).getId()));}
+                dynamic2D.get(count).add(question.getOptions().get(x-1).getId());}
 
         }
         //optionsArray = question.getOptions().toArray(optionsArray);//
@@ -132,13 +132,12 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getItemAtPosition(position).equals("Selecciona")){
-            System.out.println("Elemento invalido");
             //do nothing
         }else{
             for(int i=0;i<idsSpiners.size();i++)
             if(parent.getId()==idsSpiners.get(i)){
                 userForm.getArrQuestions().get(i).setAnswer(dynamic2D.get(i).get(position-1));//antes solo guardaba la posicion 1-3
-                Toast.makeText(parent.getContext(), "Selected: " + userForm.getArrQuestions().get(i).getTitle()+" id_POS: "+dynamic2D.get(i).get(position-1), Toast.LENGTH_LONG).show();
+                //Toast.makeText(parent.getContext(), "Selected: " + userForm.getArrQuestions().get(i).getTitle()+" id_POS: "+dynamic2D.get(i).get(position-1), Toast.LENGTH_LONG).show();
                 break;
             }
         }

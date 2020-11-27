@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Option implements Serializable {
 
     String title;
-    String id;
-    public Option(String title, String id){
+    int id;
+    public Option(String title, int id){
         this.title=title;
         this.id=id;
     }
@@ -23,11 +23,11 @@ public class Option implements Serializable {
         this.title = title;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

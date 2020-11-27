@@ -6,18 +6,23 @@ import androidx.lifecycle.ViewModel;
 
 public class HistoryViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> title;
+    private MutableLiveData<Boolean> flag;
 
     public HistoryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is history fragment");
+        flag = new MutableLiveData<>();
+        flag.setValue(true);
+        title = new MutableLiveData<>();
+        title.setValue("");
+    }
+    public void ChangeTitle(int Number){
+        title.setValue("Numero de solicitudes: "+Number);
+    }
+    public LiveData<String> getTitle(){
+        return title;
     }
 
-    public void changeValue(String x){
-        this.mText.setValue(x);
-    }
-
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<Boolean> getHistory() {
+        return flag;
     }
 }

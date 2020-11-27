@@ -22,6 +22,7 @@ import com.example.recommender.entities.Automobile;
 import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
 import com.example.recommender.form.Form;
+import com.example.recommender.retrofit.models.History;
 import com.example.recommender.retrofit.models.RecommendationRequest;
 
 import java.io.IOException;
@@ -40,26 +41,34 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
     private Form form;
     private User user;
     private int idBAceptar;
+    private String type;
+    private History history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recom_result);
-
-        Intent intent = getIntent();
-        this.form=(Form)intent.getSerializableExtra("Form");
-        this.user=(User)intent.getSerializableExtra("User");
-
         tvnResults=findViewById(R.id.idTvResult);
         tvProfile=findViewById(R.id.idTvProfile);
         bAceptar = findViewById(R.id.bAceptar);
-        bAceptar.setOnClickListener(this);
         pbar=findViewById(R.id.idProgressBar);
         containerP=findViewById(R.id.containerP);
+        bAceptar.setOnClickListener(this);
+        idBAceptar=bAceptar.getId();
         idsButtons = new ArrayList<>();
         idsAutos = new ArrayList<>();
-        idBAceptar=bAceptar.getId();
-        new getUserRecomInBackground().execute(new RecommendationRequest(form,user));
+
+        Intent intent = getIntent();
+        this.type=intent.getStringExtra("type");
+        if(type.equals("view")){
+            this.history=(History)intent.getSerializableExtra("History");
+            System.out.println("AQUI LANZA NUEVA FORMA");
+
+        }else{
+            this.form=(Form)intent.getSerializableExtra("Form");
+            this.user=(User)intent.getSerializableExtra("User");
+            new getUserRecomInBackground().execute(new RecommendationRequest(form,user));
+        }
     }
 
     // Construccion de contenedores

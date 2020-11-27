@@ -2,7 +2,6 @@ package com.example.recommender.ui.history;
 // clase para generar items de resultaods de manera dinamica.
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -13,22 +12,27 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 
+import com.example.recommender.entities.RequestResult;
+import com.example.recommender.retrofit.models.History;
+
 import java.util.ArrayList;
 
 public class ItemResult extends ConstraintLayout{
     private Context context;
-    private int userResults;
+    private ArrayList<RequestResult> userResults;
+    private int nresults;
     private LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-    private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     private ArrayList<String> idsRes;
     private ArrayList<Button> btnRes, btnForm;
 
 
-    public ItemResult(Context context, int userResults){
+    public ItemResult(Context context, History userResults){
         super(context);
         this.context=context;
-        this.userResults=userResults;
-        idsRes = new ArrayList<>();
+        this.userResults=userResults.getArrRequest();
+        this.nresults=userResults.getRequests();
+        //idsRes = new ArrayList<>();
         btnForm = new ArrayList<>();
         btnRes = new ArrayList<>();
     }
@@ -36,14 +40,14 @@ public class ItemResult extends ConstraintLayout{
     public ResultContainer initContainers(LinearLayout parent) {
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(30,scale), 0, 0);
-        for (int i = 0; i < userResults; i++) {
-            parent.addView(createItem(context),layoutParamsP); //objeto result en lugar de question
+        for (int i = 0; i < nresults; i++) {
+            parent.addView(createItem(context,i),layoutParamsP); //objeto result en lugar de question
         }
-        ResultContainer rc = new ResultContainer(idsRes,btnForm,btnRes);
+        ResultContainer rc = new ResultContainer(btnForm,btnRes);
         return rc;
     }
 
-    private ConstraintLayout createItem(Context context) {
+    private ConstraintLayout createItem(Context context, int count) {
         ConstraintLayout contenedor = new ConstraintLayout(context);
         contenedor.setId(View.generateViewId());
         contenedor.setLayoutParams(layoutParamsContainer);
@@ -51,26 +55,26 @@ public class ItemResult extends ConstraintLayout{
 
         TextView numResult = new TextView(context); // title ahora es numberResult
         numResult.setId(View.generateViewId());
-        numResult.setText("Resultado #1325"); // question.getTitle() ahora se coambia por user result
+        numResult.setText("Recomendacion #"+userResults.get(count).getId()); // question.getTitle() ahora se coambia por user result
         numResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(numResult);
-        idsRes.add(numResult.getText().toString());
+        //idsRes.add(numResult.getText().toString());
 
         TextView dateTime = new TextView(context);
         dateTime.setId(View.generateViewId());
-        dateTime.setText("Fecha 21/03/2020, 14:55:30");
+        dateTime.setText(userResults.get(count).getDate());
         dateTime.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(dateTime);
 
         TextView profile = new TextView(context);
         profile.setId(View.generateViewId());
-        profile.setText("Perfil: 'Economistas'");
+        profile.setText("Perfil: '"+userResults.get(count).getProfile()+"'");
         profile.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(profile);
 
         TextView numRec = new TextView(context);
         numRec.setId(View.generateViewId());
-        numRec.setText("Recomendaciones: 5");
+        numRec.setText("Recomendaciones: "+userResults.get(count).getResults());
         numRec.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(numRec);
 

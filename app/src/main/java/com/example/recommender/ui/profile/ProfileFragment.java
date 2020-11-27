@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
         editTextP = root.findViewById(R.id.editTextTextPassword);
         final Button buttonlogout = root.findViewById(R.id.logout);
         final ImageView ivEditPass = root.findViewById(R.id.ivWaring);
-        this.loadingProgressBar = root.findViewById(R.id.pBar);
+        this.loadingProgressBar = root.findViewById(R.id.pBarHistory);
         fabDone.hide();
 
         profileViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
