@@ -69,8 +69,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY_FOR_VIEW) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "El dato es: "+data.getStringExtra("newpass"), Toast.LENGTH_SHORT).show();
-                //editTextP.setText(data.getStringExtra("newpass"));
+                Toast.makeText(getActivity(), "ACTUALIZA DATOS", Toast.LENGTH_SHORT).show();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
@@ -79,15 +78,17 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void loadForms(int idReq){
-        Toast.makeText(getActivity(),"id Form "+idReq,Toast.LENGTH_SHORT).show();
+    private void loadForms(int idReq, int index){
+        Intent activityIntent = new Intent(getActivity(), RecomForm.class);
+        activityIntent.putExtra("reqRes",history.getArrRequest().get(index)); //solo paso el requestReult necesario
+        activityIntent.putExtra("type", "view");
+        startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY_FOR_VIEW);
     }
 
-    private void loadRecom(int idReq,String idRes){
-        Toast.makeText(getActivity(),"id Recom "+idReq,Toast.LENGTH_SHORT).show();
+    private void loadRecom(int idReq,int index){
         Intent activityIntent = new Intent(getActivity(), RecomResult.class);
-        activityIntent.putExtra("History",history);
-        activityIntent.putExtra("type", "view"); // AQUI EL VALOR ERA idRes
+        activityIntent.putExtra("reqRes",history.getArrRequest().get(index)); //solo paso el requestReult necesario
+        activityIntent.putExtra("type", "view");
         startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY_FOR_VIEW);
     }
 
@@ -106,10 +107,10 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         for(int x = 0; x<rc.getButtonForm().size(); x++){
             if(view.getId()==rc.getButtonForm().get(x).getId()){
-                loadForms(history.getArrRequest().get(x).getId());
+                loadForms(history.getArrRequest().get(x).getId(),x);
                 break;
             }else if(view.getId()==rc.getButtonRecom().get(x).getId()){
-                loadRecom(history.getArrRequest().get(x).getId(),"1");  // CAMBIO
+                loadRecom(history.getArrRequest().get(x).getId(),x);
                 break;
             }
         }

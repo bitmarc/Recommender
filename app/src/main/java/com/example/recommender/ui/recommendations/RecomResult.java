@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.recommender.R;
 import com.example.recommender.connection.ConnectionManager;
 import com.example.recommender.entities.Automobile;
+import com.example.recommender.entities.Profile;
 import com.example.recommender.entities.Recommendation;
+import com.example.recommender.entities.RequestResult;
 import com.example.recommender.entities.User;
 import com.example.recommender.form.Form;
 import com.example.recommender.retrofit.models.History;
@@ -42,7 +44,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
     private User user;
     private int idBAceptar;
     private String type;
-    private History history;
+    private RequestResult reqRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,14 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         Intent intent = getIntent();
         this.type=intent.getStringExtra("type");
         if(type.equals("view")){
-            this.history=(History)intent.getSerializableExtra("History");
+            this.reqRes=(RequestResult) intent.getSerializableExtra("reqRes");
             System.out.println("AQUI LANZA NUEVA FORMA");
+            Recommendation recom=new Recommendation();
+            recom.setIdRecommendation(reqRes.getId());
+            recom.setResults(reqRes.getAutos());
+            Profile profile = new Profile(0,reqRes.getProfile(),0); // El perfil aun no contiene parametros
+            recom.setProfile(profile);
+            setRecom(recom);
 
         }else{
             this.form=(Form)intent.getSerializableExtra("Form");

@@ -23,6 +23,7 @@ import java.util.List;
 public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSelectedListener {
 
     private ArrayList<Integer> idsContenedores, idsSpiners;
+    private ArrayList<Spinner> arrSpiners;
     private Form userForm;
     private TextView title;
     private Spinner spiner;
@@ -39,14 +40,15 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         this.userForm=userForm;
         idsContenedores = new ArrayList<>();
         idsSpiners = new ArrayList<>();
+        arrSpiners = new ArrayList<>();
         this.counter=0;
     }
-
 
     public void initContainers(Context context, LinearLayout parent) {
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         for (int i = 0; i < userForm.getArrQuestions().size(); i++) {
+            System.out.println("for . "+userForm.getArrQuestions().size());
             dynamic2D.add(new ArrayList<Integer>());
             parent.addView(createItem(context, userForm.getArrQuestions().get(i),i),layoutParamsP);
         }
@@ -83,6 +85,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         spiner.setAdapter(ad);
         contenedor.addView(spiner);
         idsSpiners.add(spiner.getId());
+        arrSpiners.add(spiner);
         spiner.setOnItemSelectedListener(this);
 
         imageHint = new Button(context);
@@ -101,19 +104,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         constraintSet.connect(spiner.getId(), ConstraintSet.TOP, title.getId(), constraintSet.BOTTOM);
         constraintSet.applyTo(contenedor);
         idsContenedores.add(contenedor.getId());
+        System.out.println("voy a regresar contenedor");
         return contenedor;
-    }
-
-    private int toPixels(int dp, float scale) {
-        int pixels = (int) (dp * scale + 0.5f);
-        return pixels;
-    }
-
-    public List<Question> getQuestions() {
-        return userForm.getArrQuestions();
-    }
-    public Form getForm() {
-        return userForm;
     }
 
     public boolean getStatus(){
@@ -127,6 +119,31 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
             }
         }
         return status;
+    }
+
+    public void setResults(){
+        for (int k=0;k<idsSpiners.size();k++){
+            for (int l=0;l<userForm.getArrQuestions().get(k).getOptions().size();l++){
+                if(userForm.getArrQuestions().get(k).getOptions().get(l).getId()==userForm.getArrQuestions().get(k).getAnswer()){
+                    arrSpiners.get(k).setSelection(l+1);
+                    break;
+                }
+            }
+            arrSpiners.get(k).setEnabled(false);
+        }
+    }
+
+    private int toPixels(int dp, float scale) {
+        int pixels = (int) (dp * scale + 0.5f);
+        return pixels;
+    }
+
+    public List<Question> getQuestions() {
+        return userForm.getArrQuestions();
+    }
+
+    public Form getForm() {
+        return userForm;
     }
 
     @Override

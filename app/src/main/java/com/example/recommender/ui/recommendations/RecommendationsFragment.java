@@ -137,7 +137,6 @@ public class RecommendationsFragment extends Fragment {
     // ********************************************************************************** METHOD SETFORM
     public void setForm(Form userForm){
         if(userForm.getId()!=null){
-            Toast.makeText(getActivity(), "Exito", Toast.LENGTH_SHORT).show();
             this.form = new ItemForm(getActivity(),userForm);
             form.initContainers(getActivity(),containerP);
         }
