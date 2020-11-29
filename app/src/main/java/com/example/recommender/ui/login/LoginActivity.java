@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         // Se ejecuta como resultado despues de un registro exitoso.
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                System.out.println("el dato es: "+data.getStringExtra("result"));
                 this.usernameEditText.setText(data.getStringExtra("result"));
                 listener();
             }
@@ -89,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        usernameEditText.setError(getString(R.string.login_failed));
     }
 
     public void listener(){

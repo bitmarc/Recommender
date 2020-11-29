@@ -94,12 +94,16 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
     public void setHistory(History history){
         this.history=history;
+        if(history.getRequests()==0){
+            title.setText(R.string.no_history);
+        }else{
         historyViewModel.ChangeTitle(history.getRequests());
         ItemResult itres = new ItemResult(getContext(),history);
         this.rc=itres.initContainers(lparent);
         for(int x = 0; x<rc.getButtonForm().size(); x++){
             rc.getButtonForm().get(x).setOnClickListener(this);
             rc.getButtonRecom().get(x).setOnClickListener(this);
+        }
         }
     }
 

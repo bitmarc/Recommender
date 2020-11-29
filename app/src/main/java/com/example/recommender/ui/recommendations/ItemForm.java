@@ -1,6 +1,7 @@
 package com.example.recommender.ui.recommendations;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,13 +17,14 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.example.recommender.form.Form;
 import com.example.recommender.form.Question;
 import com.example.recommender.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSelectedListener {
+public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private ArrayList<Integer> idsContenedores, idsSpiners;
+    private ArrayList<Integer> idsContenedores, idsSpiners, idsHints;
     private ArrayList<Spinner> arrSpiners;
     private Form userForm;
     private TextView title;
@@ -41,6 +43,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         idsContenedores = new ArrayList<>();
         idsSpiners = new ArrayList<>();
         arrSpiners = new ArrayList<>();
+        idsHints = new ArrayList<>();
         this.counter=0;
     }
 
@@ -63,7 +66,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         title = new TextView(context);
         title.setId(View.generateViewId());
         title.setText(idsContenedores.size()+1+".- "+question.getTitle());
-        LayoutParams tvLp= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams tvLp= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
         title.setLayoutParams(tvLp);
         contenedor.addView(title);
 
@@ -92,16 +95,20 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         imageHint.setId(View.generateViewId());
         imageHint.setBackground(context.getDrawable(R.drawable.ic_baseline_help_outline_24));
         imageHint.setLayoutParams(new LinearLayout.LayoutParams(toPixels(25, scale), toPixels(25, scale)));
+        imageHint.setOnClickListener(this);
+        idsHints.add(imageHint.getId());
         contenedor.addView(imageHint);
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(contenedor);
-        constraintSet.connect(title.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(title.getId(), constraintSet.END, imageHint.getId(), constraintSet.END);
+
         constraintSet.connect(title.getId(), constraintSet.TOP, contenedor.getId(), constraintSet.TOP);
-        constraintSet.connect(imageHint.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
+        constraintSet.connect(title.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(imageHint.getId(), ConstraintSet.TOP, contenedor.getId(), constraintSet.TOP);
+        constraintSet.connect(imageHint.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
+        constraintSet.connect(title.getId(), constraintSet.END, imageHint.getId(), constraintSet.START);
         constraintSet.connect(spiner.getId(), ConstraintSet.TOP, title.getId(), constraintSet.BOTTOM);
+
         constraintSet.applyTo(contenedor);
         idsContenedores.add(contenedor.getId());
         System.out.println("voy a regresar contenedor");
@@ -165,4 +172,18 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     }
 
 
+    @Override
+    public void onClick(View view) {
+        int[] location= new int[2];
+        view.getLocationOnScreen(location);
+        for(int x = 0; x<idsHints.size(); x++){
+            if(view.getId()==idsHints.get(x)){
+
+                Toast toast= Toast.makeText(getContext(), userForm.getArrQuestions().get(x).getHint(), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP|Gravity.LEFT, location[0],location[1]);
+                toast.show();
+                break;
+            }
+        }
+    }
 }

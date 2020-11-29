@@ -149,29 +149,29 @@ public class RecommendationsFragment extends Fragment {
         protected void onPreExecute() {
             pbLoading.setVisibility(View.VISIBLE);
         }
-
-        @Override
-        protected Form doInBackground(Void... voids) {
-            Form userForm = new Form();
-            ConnectionManager cm = new ConnectionManager();
-            try{
-                userForm=cm.getUserForm();
-            }catch (IOException e){
-                e.printStackTrace();
+            @Override
+            protected Form doInBackground (Void...voids){
+                Form userForm = new Form();
+                ConnectionManager cm = new ConnectionManager();
+                try {
+                    userForm = cm.getUserForm();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return userForm;
             }
-            return userForm;
+            @Override
+            protected void onPostExecute (Form form){
+                setForm(form);
+                pbLoading.setVisibility(View.GONE);
+            }
         }
 
-        @Override
-        protected void onPostExecute(Form form) {
-            setForm(form);
-            pbLoading.setVisibility(View.GONE);
+        private int toPixels(int dp, float scale) {
+            int pixels = (int) (dp * scale + 0.5f);
+            return pixels;
         }
+
     }
 
-    private int toPixels(int dp, float scale) {
-        int pixels = (int) (dp * scale + 0.5f);
-        return pixels;
-    }
-}
 

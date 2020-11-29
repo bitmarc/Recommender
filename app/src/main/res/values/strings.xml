@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">RecomendAuto</string>
-    <string name="app_version">Recomendauto v.0.8.3</string>
+    <string name="app_name">RecomendAutos</string>
+    <string name="app_version">Recomendauto v.0.9.1</string>
     <string name="app_info">UPIITA-IPN 2020</string>
     <string name="app_developer_email">marcoarojas.95@gmail.com</string>
     <!-- Strings related to login -->
@@ -20,7 +20,7 @@
     <string name="invalid_password2">La contraseña debe ser la misma</string>
     <string name="error_password">Contraseña de usuario incorrecta</string>
     <string name="invalid_email">El correo electronico es erroneo</string>
-    <string name="login_failed">"Error al inicair sesión"</string>
+    <string name="login_failed">"Error al inicair sesión, usuario o contraseña incorrectos"</string>
     <string name="signup_title">Nuevo Registro</string>
     <string name="signup_or_text">ó</string>
 
@@ -40,4 +40,6 @@
         tu perfil de usuario y con base en este, proporcionarte resultados personalizados</string>
 
     <string name="title_form">Selecciona la opcion que creas mas conveniente para cada pregunta y al finalizar presiona Enviar</string>
+
+    <string name="no_history">Actualmente no cuentas con un historial de recomendaciones.</string>
 </resources>

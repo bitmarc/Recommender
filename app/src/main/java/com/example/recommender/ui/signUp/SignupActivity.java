@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import android.view.KeyEvent;
@@ -31,11 +32,11 @@ public class SignupActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText passwordRepEditText;
+    private ProgressBar pbar;
     ConnectionManager cm;
 
 
     // clase que maneja el registro de un nuevo usuario.
-    // * Falta los metodos de verificacion de validadcion de datos y conexion con servidor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         this.emailEditText = findViewById(R.id.editTextTextEmailAddress);
         this.passwordEditText = findViewById(R.id.editTextTextPassword);
         this.passwordRepEditText = findViewById(R.id.editTextTextPasswordRpeat);
+        this.pbar= findViewById(R.id.progressBarSignup);
         cm = new ConnectionManager();
         listener();
     }
@@ -63,12 +65,14 @@ public class SignupActivity extends AppCompatActivity {
                 if (signupFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(signupFormState.getUsernameError()));
                 }
-                if (signupFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(signupFormState.getPasswordError()));
-                    passwordRepEditText.setError(getString(R.string.invalid_password2));
-                }
                 if (signupFormState.getEmailError() != null){
                     emailEditText.setError(getString(signupFormState.getEmailError()));
+                }
+                if (signupFormState.getPasswordError() != null) {
+                    passwordEditText.setError(getString(signupFormState.getPasswordError()));
+                }
+                if (signupFormState.getPasswordRepeatError() != null){
+                    passwordRepEditText.setError(getString(signupFormState.getPasswordRepeatError()));
                 }
             }
         });
@@ -93,9 +97,10 @@ public class SignupActivity extends AppCompatActivity {
         };
 
         usernameEditText.addTextChangedListener(afterTextChangedListener);
+        emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordRepEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordRepEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -115,10 +120,12 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void verificar(){
+        pbar.setVisibility(View.VISIBLE);
         cm.checkUser(usernameEditText.getText().toString(), new MyCallback(){
             @Override
             public void onDataGot(Message message){
                 if(message.getMessage().equals("El usuario ya existe")){
+                    pbar.setVisibility(View.GONE);
                     usernameEditText.setError(getString(R.string.existing_username));
                 }else{
                     cm.addUser(usernameEditText, passwordEditText, persoNameEditText, emailEditText, new MyCallback() {
