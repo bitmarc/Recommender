@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorButtonX">#F44336</color>
+    <color name="recomBox1">#969200</color>
+    <color name="recomBox2">#E3DD02</color>
 </resources>

@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 
+import com.example.recommender.R;
 import com.example.recommender.entities.RequestResult;
 import com.example.recommender.retrofit.models.History;
 
@@ -82,6 +83,7 @@ public class ItemResult extends ConstraintLayout{
         bForm.setId(View.generateViewId());
         bForm.setText("Ver formulario");
         bForm.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        bForm.setBackgroundColor(getResources().getColor(R.color.recomBox1));
         contenedor.addView(bForm);
         btnForm.add(bForm);
 
@@ -89,6 +91,7 @@ public class ItemResult extends ConstraintLayout{
         bResult.setId(View.generateViewId());
         bResult.setText("Ver recomendaciones");
         bResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        bResult.setBackgroundColor(getResources().getColor(R.color.recomBox1));
         contenedor.addView(bResult);
         btnRes.add(bResult);
 
@@ -114,6 +117,7 @@ public class ItemResult extends ConstraintLayout{
         constraintSet.connect(bResult.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(bResult.getId(), constraintSet.TOP, bForm.getId(), constraintSet.BOTTOM);
         constraintSet.applyTo(contenedor);
+        contenedor.setBackgroundColor(getResources().getColor(R.color.recomBox2));
         return contenedor;
     }
 

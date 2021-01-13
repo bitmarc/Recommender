@@ -59,6 +59,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(String s) {
                 title.setText(s);
+                title.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
         });
         return root;

@@ -68,7 +68,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
             Recommendation recom=new Recommendation();
             recom.setIdRecommendation(reqRes.getId());
             recom.setResults(reqRes.getAutos());
-            Profile profile = new Profile(0,reqRes.getProfile(),0); // El perfil aun no contiene parametros
+            Profile profile = new Profile(0,reqRes.getProfile(),"z"); // El perfil aun no contiene parametros
             recom.setProfile(profile);
             setRecom(recom);
 
@@ -129,6 +129,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         seeMore = new Button(context);
         seeMore.setId(View.generateViewId());
         seeMore.setText("VER FICHA TÉCNICA");
+        seeMore.setBackgroundColor(getResources().getColor(R.color.recomBox1));
         //final float scale = context.getResources().getDisplayMetrics().density;
         //seeMore.setLayoutParams(new LinearLayout.LayoutParams(toPixels(50, scale), toPixels(25, scale)));
         contenedor.addView(seeMore);
@@ -161,6 +162,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         constraintSet.connect(seeMore.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(seeMore.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.applyTo(contenedor);
+        contenedor.setBackgroundColor(getResources().getColor(R.color.recomBox2));
         return contenedor;
     }
 

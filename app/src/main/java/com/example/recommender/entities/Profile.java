@@ -4,9 +4,9 @@ public class Profile {
 
     int id;
     String name;
-    int parameter;
+    String parameter;
 
-    public Profile(int id, String name, int Parameter){
+    public Profile(int id, String name, String Parameter){
         this.id=id;
         this.name=name;
         this.parameter=Parameter;
@@ -28,11 +28,11 @@ public class Profile {
         this.name = name;
     }
 
-    public int getParameter() {
+    public String getParameter() {
         return parameter;
     }
 
-    public void setParameter(int parameter) {
+    public void setParameter(String parameter) {
         this.parameter = parameter;
     }
 
