@@ -32,7 +32,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public LiveData<String> getTitle() {
-        appTitle.setValue("RecomendAuto");
+        appTitle.setValue("RecomendAutos");
         return appTitle;
     }
     public LiveData<String> getCurrentName() {

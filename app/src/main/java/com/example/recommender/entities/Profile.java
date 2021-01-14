@@ -4,12 +4,12 @@ public class Profile {
 
     int id;
     String name;
-    String parameter;
+    String description;
 
-    public Profile(int id, String name, String Parameter){
+    public Profile(int id, String name, String description){
         this.id=id;
         this.name=name;
-        this.parameter=Parameter;
+        this.description=description;
     }
 
     public int getId() {
@@ -28,12 +28,12 @@ public class Profile {
         this.name = name;
     }
 
-    public String getParameter() {
-        return parameter;
+    public String getDescription() {
+        return description;
     }
 
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
