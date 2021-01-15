@@ -161,7 +161,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         description.setSingleLine(false);
         sourceString = "<b>" + "A FAVOR: " + "</b> <br> " + score.getPositive() + "<br>"+"<b>" + "En contra: " + "</b> <br> "+score.getNegative();
         description.setText(Html.fromHtml(sourceString));
-        description.setBackgroundResource(R.drawable.tvback);
+        description.setBackgroundResource(R.drawable.tvback);//*********************
         //description.setText(score.getPositive());
         contenedor.addView(description);
 

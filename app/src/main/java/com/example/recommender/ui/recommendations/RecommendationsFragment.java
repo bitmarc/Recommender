@@ -48,11 +48,11 @@ public class RecommendationsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "Limpiar pantalla ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Limpiar pantalla ", Toast.LENGTH_SHORT).show();
                 recommendationsViewModel.changeUI(false);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -63,9 +63,7 @@ public class RecommendationsFragment extends Fragment {
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         bienvenida = new TextView(context);
         bienvenida.setId(View.generateViewId());
-        bienvenida.setText("Para recibir recomendaciones, deberás completar el\n" +
-                "        formulario que se te precentará a continuación, el cuál tiene el propósito de identificar\n" +
-                "        tu perfil de usuario y con base en este, proporcionarte resultados personalizados");
+        bienvenida.setText(R.string.message_start_recommender);
         parent.addView(bienvenida);
         BtnStart = new Button(context);
         BtnStart.setId(View.generateViewId());

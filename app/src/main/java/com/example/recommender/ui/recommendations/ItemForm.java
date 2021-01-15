@@ -67,7 +67,10 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         title.setId(View.generateViewId());
         title.setText(idsContenedores.size()+1+".- "+question.getTitle());
         LayoutParams tvLp= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
+        //ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
+        title.setPadding(toPixels(10,scale),toPixels(5,scale),toPixels(5,scale),toPixels(5,scale));
         title.setLayoutParams(tvLp);
+        //title.setBackgroundResource(R.drawable.containerback);
         contenedor.addView(title);
 
         spiner = new Spinner(context);
@@ -82,9 +85,10 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
                 dynamic2D.get(count).add(question.getOptions().get(x-1).getId());}
 
         }
-        //optionsArray = question.getOptions().toArray(optionsArray);//
-        ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter ad = new ArrayAdapter(context, R.layout.dropdownlayout, optionsArray);
+        //ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
+        //ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ad.setDropDownViewResource(R.layout.dropdownlayout);
         spiner.setAdapter(ad);
         contenedor.addView(spiner);
         idsSpiners.add(spiner.getId());
@@ -111,7 +115,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
         constraintSet.applyTo(contenedor);
         idsContenedores.add(contenedor.getId());
-        System.out.println("voy a regresar contenedor");
+        contenedor.setBackgroundResource(R.drawable.tvback);
         return contenedor;
     }
 

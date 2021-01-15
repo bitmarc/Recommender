@@ -70,7 +70,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY_FOR_VIEW) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "ACTUALIZA DATOS", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "ACTUALIZA DATOS", Toast.LENGTH_SHORT).show();
+                System.out.println("Actualiza datos");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();

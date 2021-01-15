@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">RecomendAutos</string>
-    <string name="app_version">Recomendautos v.0.9.3</string>
+    <string name="app_version">Recomendautos v0.9.6</string>
     <string name="app_info">UPIITA-IPN 2020</string>
     <string name="app_developer_email">marcoarojas.95@gmail.com</string>
     <!-- Strings related to login -->
@@ -35,11 +35,8 @@
     <string name="start_text_recom">Empezar</string>
     <string name="send_data_recom">Enviar</string>
 
-    <string name="message_start_recommender">Para recibir recomendaciones, deberás completar el
-        formulario que se te precentará a continuación, el cuál tiene el propósito de identificar
-        tu perfil de usuario y con base en este, proporcionarte resultados personalizados</string>
-
-    <string name="title_form">Selecciona la opcion que creas mas conveniente para cada pregunta y al finalizar presiona Enviar</string>
+    <string name="message_start_recommender"> Para recibir recomendaciones, deberás completar el formulario que se te precentará a continuación, el cuál tiene el propósito de identificar tus preferencias y necesidades en cuanto a automoviles, y de esta forma proporcionarte resultados apegados a tu perfil</string>
+    <string name="title_form">Selecciona la opción que creas más adecuada para cada pregunta, tomando en cuanta tu contexto de vida actual, asi como preferencias y necesidades. Al finalizar presiona Enviar</string>
 
     <string name="no_history">Actualmente no cuentas con un historial de recomendaciones.</string>
 </resources>
