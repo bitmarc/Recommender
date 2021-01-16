@@ -1,5 +1,7 @@
 package com.example.recommender.Interface;
 
+import com.example.recommender.entities.Automobile;
+import com.example.recommender.entities.Datasheet;
 import com.example.recommender.entities.Message;
 import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
@@ -46,4 +48,7 @@ public interface JsonApi {
 
     @GET("history")
     Call<History> getHistory();
+
+    @POST("details")
+    Call<Datasheet> getDatasheet(@Body Automobile auto);
 }

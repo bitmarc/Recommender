@@ -4,6 +4,8 @@ import android.widget.EditText;
 
 import com.example.recommender.Interface.JsonApi;
 import com.example.recommender.Interface.MyCallback;
+import com.example.recommender.entities.Automobile;
+import com.example.recommender.entities.Datasheet;
 import com.example.recommender.entities.Message;
 import com.example.recommender.entities.Recommendation;
 import com.example.recommender.entities.User;
@@ -166,5 +168,12 @@ public class ConnectionManager {
         Call<History> call = jsonApi.getHistory();
         reqHistory = call.execute().body();
         return reqHistory;
+    }
+
+    public Datasheet getDatasheet(Automobile auto) throws IOException {
+        Datasheet datasheet = new Datasheet();
+        Call<Datasheet> call = jsonApi.getDatasheet(auto);
+        datasheet = call.execute().body();
+        return datasheet;
     }
 }

@@ -54,6 +54,23 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
     private String type;
     private RequestResult reqRes;
     private ArrayList<ScoreSheet> scores;
+    private ArrayList<Automobile> autos;
+    private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY = 5; //random
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_RECOMMENDATION_RESULT_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                //Toast.makeText(getActivity(), "Limpiar pantalla ", Toast.LENGTH_SHORT).show();
+                System.out.println("regresa a pantalla con boton aceptar");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
+                System.out.println("regresa a pantalla con retroceso");
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +99,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
             recom.setScores(reqRes.getScores());
             setRecom(recom);
             this.scores=reqRes.getScores();
+            this.autos=reqRes.getAutos();
         }else{
             this.form=(Form)intent.getSerializableExtra("Form");
             this.user=(User)intent.getSerializableExtra("User");
@@ -224,7 +242,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         this.tvnResults.setText("Resultado No. "+recom.getIdRecommendation());
         this.tvProfile.setText("Perfil: "+recom.getProfile().getName());
         this.scores=recom.getScores();
-        System.out.println("Empieza Init containers ok");
+        this.autos=recom.getResults();
         initContainers(getApplication(), containerP, recom);
     }
 
@@ -234,11 +252,14 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
             regresar();
         }else{
             for(int i =0;i<idsButtons.size();i++) {
-                System.out.println("for");
                 if (view.getId() == idsButtons.get(i)) {
-                    Uri uri = Uri.parse(scores.get(i).getSeeMore()); // missing 'http://' will cause crashed
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    Intent activityIntent = new Intent(getApplicationContext(), CardetailActivity.class);
+                    activityIntent.putExtra("auto",autos.get(i)); // AQUI EL VALOR ERA idRes
+                    startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
+                    // para abrir enlace web
+                    //Uri uri = Uri.parse(scores.get(i).getSeeMore()); // missing 'http://' will cause crashed
+                    //Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    //startActivity(intent);
                     //Toast.makeText(this, "id: "+idsAutos.get(i)+scores.get(i).getSeeMore(), Toast.LENGTH_SHORT).show();
                 }
             }
