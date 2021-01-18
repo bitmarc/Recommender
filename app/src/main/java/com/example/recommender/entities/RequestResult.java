@@ -10,19 +10,17 @@ public class RequestResult implements Serializable {
     private int id;
     private String date;
     private int results;
-    private String profile;
+    private Profile profile;
     private ArrayList<Automobile> autos;
     private Form form;
-    private ArrayList<ScoreSheet> scores;
 
-    public RequestResult(int id, String date, int results, String profile, ArrayList<Automobile> autos, Form form, ArrayList<ScoreSheet> scores) {
+    public RequestResult(int id, String date, int results, Profile profile, ArrayList<Automobile> autos, Form form) {
         this.id = id;
         this.date = date;
         this.results = results;
         this.profile = profile;
         this.autos = autos;
         this.form=form;
-        this.scores=scores;
     }
 
     public int getId() {
@@ -49,11 +47,11 @@ public class RequestResult implements Serializable {
         this.results = results;
     }
 
-    public String getProfile() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
@@ -73,10 +71,4 @@ public class RequestResult implements Serializable {
         this.form = form;
     }
 
-    public ArrayList<ScoreSheet> getScores() {
-        return scores;
-    }
-    public void setScores(ArrayList<ScoreSheet> scores) {
-        this.scores = scores;
-    }
 }

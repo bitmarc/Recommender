@@ -66,16 +66,17 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/bAceptar"
-        app:layout_constraintTop_toBottomOf="@id/idTitle">
+        app:layout_constraintTop_toBottomOf="@+id/idTvProfileDescription">
 
         <LinearLayout
             android:id="@+id/containerP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/paddingContainerP">
 
         </LinearLayout>
     </ScrollView>

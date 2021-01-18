@@ -74,7 +74,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
                 System.out.println("Actualiza datos");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Cancelado", Toast.LENGTH_SHORT).show();
                 //Write your code if there's no result
             }
         }

@@ -34,8 +34,10 @@
 
     <string name="start_text_recom">Empezar</string>
     <string name="send_data_recom">Enviar</string>
+    <string name="see_more_btn">Ir a sitio web</string>
 
-    <string name="message_start_recommender"> Para recibir recomendaciones, deberás completar el formulario que se te precentará a continuación, el cuál tiene el propósito de identificar tus preferencias y necesidades en cuanto a automoviles, y de esta forma proporcionarte resultados apegados a tu perfil</string>
+    <string name="message_start_recommender"> Para recibir recomendaciones deberás completar el formulario que se te precentará a continuación, el cuál tiene el propósito de recolectar información sobre tus preferencias y necesidades en cuanto a automoviles, esta nformación será enviada al servidor donde se procesará para identificar tu perfil y brindarte resultados personalizados. </string>
+    <string name="objective"> Recuerda que las recomendaciones emitidas, tienen como objetivo guiarte y brindarte un punto de partida sobre el tipo de automoviles que deberias considerar al momento de decidirte a comprar uno</string>
     <string name="title_form">Selecciona la opción que creas más adecuada para cada pregunta, tomando en cuanta tu contexto de vida actual, asi como preferencias y necesidades. Al finalizar presiona Enviar</string>
 
     <string name="no_history">Actualmente no cuentas con un historial de recomendaciones.</string>

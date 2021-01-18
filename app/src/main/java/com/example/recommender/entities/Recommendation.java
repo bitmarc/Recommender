@@ -9,16 +9,14 @@ public class Recommendation {
     private int idRecommendation;
     private ArrayList<Automobile> results;
     private Profile profile;
-    private ArrayList<ScoreSheet> scores;
 
     public Recommendation(){
     }
 
-    public Recommendation(int idRecommendation, ArrayList<Automobile> results, Profile profile, ArrayList<ScoreSheet> scores) {
+    public Recommendation(int idRecommendation, ArrayList<Automobile> results, Profile profile) {
         this.idRecommendation = idRecommendation;
         this.results = results;
         this.profile = profile;
-        this.scores=scores;
     }
 
     public int getIdRecommendation() {
@@ -45,11 +43,4 @@ public class Recommendation {
         this.profile = profile;
     }
 
-    public ArrayList<ScoreSheet> getScores() {
-        return scores;
-    }
-
-    public void setScores(ArrayList<ScoreSheet> scores) {
-        this.scores = scores;
-    }
 }

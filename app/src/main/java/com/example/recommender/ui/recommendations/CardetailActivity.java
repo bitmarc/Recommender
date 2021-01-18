@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.text.InputType;
 import android.view.View;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,7 +29,7 @@ import com.example.recommender.entities.ScoreSheet;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CardetailActivity extends AppCompatActivity {
+public class CardetailActivity extends AppCompatActivity implements View.OnClickListener {
     public Automobile auto;
     private ProgressBar pbar;
     private Datasheet datasheet;
@@ -47,9 +50,19 @@ public class CardetailActivity extends AppCompatActivity {
         this.pbar=findViewById(R.id.detailPbar);
         this.parent=findViewById(R.id.detailContainerP);
         this.automovil = findViewById(R.id.detailAutoName);
+        this.bAceptar = findViewById(R.id.detailsidButtonBack);
         Intent intent = getIntent();
         this.auto= (Automobile) intent.getSerializableExtra("auto");
         new getAutoDetailInBackground().execute(auto);
+
+        bAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+            }
+        });
     }
 
     public void initContainers(Context context, Datasheet datasheet){
@@ -94,6 +107,15 @@ public class CardetailActivity extends AppCompatActivity {
         contenedorA.setBackgroundResource(R.drawable.tvback);//*********************
         contenedor.addView(contenedorA);
 
+        seeMore = new Button(context);
+        seeMore.setId(View.generateViewId());
+        seeMore.setText(R.string.see_more_btn);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,toPixels(10,scale),0,toPixels(10,scale));
+        seeMore.setLayoutParams(params);
+        contenedor.addView(seeMore);
+        seeMore.setOnClickListener(this);
+
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(contenedor);
         constraintSet.connect(descriptionFavor.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
@@ -107,9 +129,12 @@ public class CardetailActivity extends AppCompatActivity {
         constraintSet.connect(contenedorA.getId(), ConstraintSet.TOP, descriptionContra.getId(), constraintSet.BOTTOM);
         constraintSet.connect(contenedorA.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(contenedorA.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
-        constraintSet.connect(contenedorA.getId(), ConstraintSet.BOTTOM, contenedor.getId(), constraintSet.BOTTOM);
 
-
+        constraintSet.connect(seeMore.getId(), ConstraintSet.TOP, contenedorA.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(seeMore.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
+        constraintSet.connect(seeMore.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
+        constraintSet.connect(seeMore.getId(), ConstraintSet.BOTTOM, contenedor.getId(), constraintSet.BOTTOM);
+        
         constraintSet.applyTo(contenedor);
         //contenedor.setBackgroundColor(getResources().getColor(R.color.recomBox2));
         //contenedor.setBackgroundResource(R.drawable.containerback);
@@ -145,6 +170,14 @@ public class CardetailActivity extends AppCompatActivity {
         this.datasheet=datasheet;
         this.automovil.setText(this.auto.getBrand()+" "+this.auto.getModel()+" "+this.auto.getYear()+" "+this.auto.getVersion());
         initContainers(getApplication(),datasheet);
+    }
+
+    @Override
+    public void onClick(View view) {
+        // para abrir enlace web
+        Uri uri = Uri.parse(this.datasheet.getScoreSheet().getSeeMore()); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     class getAutoDetailInBackground extends AsyncTask<Automobile, Void, Datasheet> {

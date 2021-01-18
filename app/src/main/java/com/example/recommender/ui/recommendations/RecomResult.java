@@ -38,12 +38,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RecomResult extends AppCompatActivity implements View.OnClickListener{
-    private TextView tvnResults, tvProfile;
+    private TextView tvnResults, tvProfile, tvProfileDescription;
     private ProgressBar pbar;
     private LinearLayout containerP;
     private ConstraintLayout contenedor; //reutilizada
     private Button seeMore, bAceptar;
-    private TextView description;
     private TextView nRecom, brand, model, year, version; // reutilizada
     private ArrayList<Integer> idsButtons, idsAutos;
     private ConstraintLayout.LayoutParams layoutParamsContainer = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
@@ -53,7 +52,6 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
     private int idBAceptar;
     private String type;
     private RequestResult reqRes;
-    private ArrayList<ScoreSheet> scores;
     private ArrayList<Automobile> autos;
     private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY = 5; //random
 
@@ -78,6 +76,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_recom_result);
         tvnResults=findViewById(R.id.idTvResult);
         tvProfile=findViewById(R.id.idTvProfile);
+        tvProfileDescription = findViewById(R.id.idTvProfileDescription);
         bAceptar = findViewById(R.id.bAceptar);
         pbar=findViewById(R.id.idProgressBar);
         containerP=findViewById(R.id.containerP);
@@ -90,22 +89,17 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         this.type=intent.getStringExtra("type");
         if(type.equals("view")){
             this.reqRes=(RequestResult) intent.getSerializableExtra("reqRes");
-            System.out.println("AQUI LANZA NUEVA FORMA");
             Recommendation recom=new Recommendation();
             recom.setIdRecommendation(reqRes.getId());
             recom.setResults(reqRes.getAutos());
-            Profile profile = new Profile(0,reqRes.getProfile(),"z"); // El perfil aun no contiene parametros
-            recom.setProfile(profile);
-            recom.setScores(reqRes.getScores());
+            recom.setProfile(reqRes.getProfile());
             setRecom(recom);
-            this.scores=reqRes.getScores();
             this.autos=reqRes.getAutos();
         }else{
             this.form=(Form)intent.getSerializableExtra("Form");
             this.user=(User)intent.getSerializableExtra("User");
             System.out.println("Entro a solicitar la recomendacion");
             new getUserRecomInBackground().execute(new RecommendationRequest(form,user));
-            System.out.println("Espero la recomendacion");
         }
     }
 
@@ -114,12 +108,12 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         float scale = context.getResources().getDisplayMetrics().density;
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         for (int i = 0; i < recomendaation.getResults().size(); i++) {
-            parent.addView(createItem(context, recomendaation.getResults().get(i),i, recomendaation.getScores().get(i)),layoutParamsP);
+            parent.addView(createItem(context, recomendaation.getResults().get(i),i),layoutParamsP);
         }
     }
 
     // Definición de item
-    private ConstraintLayout createItem(Context context, Automobile auto, int count, ScoreSheet score) {
+    private ConstraintLayout createItem(Context context, Automobile auto, int count) {
         float scale = context.getResources().getDisplayMetrics().density;
         contenedor = new ConstraintLayout(context);
         contenedor.setId(View.generateViewId());
@@ -133,7 +127,6 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         nRecom.setText(Html.fromHtml(sourceString));
         nRecom.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         nRecom.setPadding(5,0,0,0);
-        //nRecom.setText("Recomendación No. "+(count+1));
         nRecom.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
         contenedor.addView(nRecom);
 
@@ -141,7 +134,6 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         brand.setId(View.generateViewId());
         sourceString = "<b>" + "MARCA: " + "</b> " + auto.getBrand();
         brand.setText(Html.fromHtml(sourceString));
-        //brand.setText("MARCA: "+auto.getBrand());
         brand.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
         contenedor.addView(brand);
 
@@ -163,34 +155,21 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
 
         version = new TextView(context);
         version.setId(View.generateViewId());
-        sourceString = "<b>" + "VERSION: " + "</b> " + auto.getVersion();
+        sourceString = "<b>" + "VERSIÓN: " + "</b> " + auto.getVersion();
         version.setText(Html.fromHtml(sourceString));
         //version.setText("VERSION: "+auto.getVersion());
         version.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
         contenedor.addView(version);
 
-        description = new TextView(context);
-        description.setId(View.generateViewId());
-        description.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
-        description.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        description.setPadding(5,0,0,0);
-        description.setElegantTextHeight(true);
-        description.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        description.setSingleLine(false);
-        sourceString = "<b>" + "A FAVOR: " + "</b> <br> " + score.getPositive() + "<br>"+"<b>" + "En contra: " + "</b> <br> "+score.getNegative();
-        description.setText(Html.fromHtml(sourceString));
-        description.setBackgroundResource(R.drawable.tvback);//*********************
-        //description.setText(score.getPositive());
-        contenedor.addView(description);
-
         seeMore = new Button(context);
         seeMore.setId(View.generateViewId());
-        seeMore.setText("Más informacion");
+        seeMore.setText("VER DETALLES");
         seeMore.setBackgroundColor(getResources().getColor(R.color.recomBox1));
         //seeMore.setLayoutParams(new LinearLayout.LayoutParams(toPixels(150,scale),toPixels(35,scale)));
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(toPixels(150,scale),toPixels(35,scale));
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(toPixels(125,scale),toPixels(35,scale));
         params.setMargins(0,toPixels(10,scale),0,toPixels(10,scale));
         seeMore.setLayoutParams(params);
+        seeMore.setTextSize(toPixels(4,scale));
         contenedor.addView(seeMore);
         seeMore.setOnClickListener(this);
         idsButtons.add(seeMore.getId());
@@ -217,11 +196,7 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         constraintSet.connect(version.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(version.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
 
-        constraintSet.connect(description.getId(), ConstraintSet.TOP, version.getId(), constraintSet.BOTTOM);
-        constraintSet.connect(description.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(description.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
-
-        constraintSet.connect(seeMore.getId(), ConstraintSet.TOP, description.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(seeMore.getId(), ConstraintSet.TOP, version.getId(), constraintSet.BOTTOM);
         constraintSet.connect(seeMore.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(seeMore.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(seeMore.getId(), ConstraintSet.BOTTOM, contenedor.getId(), constraintSet.BOTTOM);
@@ -239,9 +214,9 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
 
     // publicacion de resultados
     public void setRecom(Recommendation recom){
-        this.tvnResults.setText("Resultado No. "+recom.getIdRecommendation());
+        this.tvnResults.setText("ID de resultado: "+recom.getIdRecommendation());
         this.tvProfile.setText("Perfil: "+recom.getProfile().getName());
-        this.scores=recom.getScores();
+        this.tvProfileDescription.setText("Descripción: "+recom.getProfile().getDescription());
         this.autos=recom.getResults();
         initContainers(getApplication(), containerP, recom);
     }
@@ -256,10 +231,6 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
                     Intent activityIntent = new Intent(getApplicationContext(), CardetailActivity.class);
                     activityIntent.putExtra("auto",autos.get(i)); // AQUI EL VALOR ERA idRes
                     startActivityForResult(activityIntent, LAUNCH_RECOMMENDATION_RESULT_ACTIVITY);
-                    // para abrir enlace web
-                    //Uri uri = Uri.parse(scores.get(i).getSeeMore()); // missing 'http://' will cause crashed
-                    //Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    //startActivity(intent);
                     //Toast.makeText(this, "id: "+idsAutos.get(i)+scores.get(i).getSeeMore(), Toast.LENGTH_SHORT).show();
                 }
             }

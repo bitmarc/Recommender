@@ -10,8 +10,9 @@
         android:id="@+id/detailTvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="Detalle de automóvil"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +37,7 @@
     <Button
         android:id="@+id/detailsidButtonBack"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="Regresar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="Marca Modelo Año Version"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailTvTitle" />

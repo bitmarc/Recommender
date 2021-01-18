@@ -1,6 +1,8 @@
 package com.example.recommender.entities;
 
-public class Profile {
+import java.io.Serializable;
+
+public class Profile implements Serializable {
 
     int id;
     String name;

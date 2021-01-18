@@ -3,6 +3,7 @@ package com.example.recommender.ui.history;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -57,6 +58,7 @@ public class ItemResult extends ConstraintLayout{
         TextView numResult = new TextView(context); // title ahora es numberResult
         numResult.setId(View.generateViewId());
         numResult.setText("Recomendacion #"+userResults.get(count).getId()); // question.getTitle() ahora se coambia por user result
+        numResult.setGravity(Gravity.CENTER);
         numResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(numResult);
         //idsRes.add(numResult.getText().toString());
@@ -64,12 +66,13 @@ public class ItemResult extends ConstraintLayout{
         TextView dateTime = new TextView(context);
         dateTime.setId(View.generateViewId());
         dateTime.setText(userResults.get(count).getDate());
+        dateTime.setGravity(Gravity.CENTER);
         dateTime.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(dateTime);
 
         TextView profile = new TextView(context);
         profile.setId(View.generateViewId());
-        profile.setText("Perfil: '"+userResults.get(count).getProfile()+"'");
+        profile.setText("Perfil: '"+userResults.get(count).getProfile().getName()+"'");
         profile.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(profile);
 

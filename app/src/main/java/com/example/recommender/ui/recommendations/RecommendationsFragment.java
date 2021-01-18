@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,9 @@ public class RecommendationsFragment extends Fragment {
         layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
         bienvenida = new TextView(context);
         bienvenida.setId(View.generateViewId());
-        bienvenida.setText(R.string.message_start_recommender);
+        String sourceString = getResources().getString(R.string.message_start_recommender)+"<br> <i>" + getResources().getString(R.string.objective) + "</i> ";
+        bienvenida.setText(Html.fromHtml(sourceString));
+        bienvenida.setTextSize(toPixels(5,scale));
         parent.addView(bienvenida);
         BtnStart = new Button(context);
         BtnStart.setId(View.generateViewId());
@@ -164,7 +167,6 @@ public class RecommendationsFragment extends Fragment {
                 pbLoading.setVisibility(View.GONE);
             }
         }
-
         private int toPixels(int dp, float scale) {
             int pixels = (int) (dp * scale + 0.5f);
             return pixels;

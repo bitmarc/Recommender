@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.example.recommender.form.Form;
 import com.example.recommender.form.Question;
 import com.example.recommender.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +87,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         ArrayAdapter ad = new ArrayAdapter(context, R.layout.dropdownlayout, optionsArray);
         //ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
         //ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ad.setDropDownViewResource(R.layout.dropdownlayout);
+        ad.setDropDownViewResource(R.layout.custom_dropdown_spinner_item);
         spiner.setAdapter(ad);
         contenedor.addView(spiner);
         idsSpiners.add(spiner.getId());
@@ -182,7 +181,6 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         view.getLocationOnScreen(location);
         for(int x = 0; x<idsHints.size(); x++){
             if(view.getId()==idsHints.get(x)){
-
                 Toast toast= Toast.makeText(getContext(), userForm.getArrQuestions().get(x).getHint(), Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP|Gravity.LEFT, location[0],location[1]);
                 toast.show();
