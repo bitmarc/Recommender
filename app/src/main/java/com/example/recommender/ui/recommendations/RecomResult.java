@@ -120,57 +120,6 @@ public class RecomResult extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private LinearLayout createBoxItem(Context context, Recommendation recomendaation, int count){
-        System.out.println("Entro a create box item");
-        float scale = context.getResources().getDisplayMetrics().density;
-        boxContainer = new LinearLayout(context);
-        boxContainer.setId(View.generateViewId());
-        boxContainer.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        boxContainer.setLayoutParams(lParams);
-        System.out.println("setLayoutparams ok create box item");
-        boxContainer.addView(createIndexItem(context,count,scale));
-        //boxContainer.addView(createItem(context, recomendaation.getResults().get(count),count),layoutParamsP);
-        System.out.println("fin create box item");
-        return boxContainer;
-    }
-
-    private ConstraintLayout createIndexItem(Context context, int count, float scale){
-        System.out.println("entro a createIndexItem");
-        ConstraintLayout contenedorIndex = new ConstraintLayout(context);
-        contenedorIndex.setId(View.generateViewId());
-        ConstraintLayout.LayoutParams paramsIndexContainer = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        contenedorIndex.setLayoutParams(paramsIndexContainer);
-        System.out.println("contenedorIndex.setLayoutParams(paramsIndexContainer)");
-        TextView numRecom = new TextView(context);
-        numRecom.setId(View.generateViewId());
-        //numRecom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-        numRecom.setText(count);
-        numRecom.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
-        //numRecom.setTextSize(toPixels(24,scale));
-        contenedorIndex.addView(numRecom);
-
-        TextView option = new TextView(context);
-        option.setId(View.generateViewId());
-        option.setText("Recomendación");
-        System.out.println("dsasfasfasf");
-        option.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
-        //option.setTextSize(toPixels(12,scale));
-        contenedorIndex.addView(option);
-
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(contenedorIndex);
-        constraintSet.connect(numRecom.getId(), constraintSet.START, contenedorIndex.getId(), constraintSet.START);
-        constraintSet.connect(numRecom.getId(), constraintSet.END, contenedorIndex.getId(), constraintSet.END);
-        constraintSet.connect(numRecom.getId(), constraintSet.TOP, contenedorIndex.getId(), constraintSet.TOP);
-        constraintSet.connect(option.getId(), ConstraintSet.TOP, numRecom.getId(), constraintSet.BOTTOM);
-        constraintSet.connect(option.getId(), ConstraintSet.START, contenedorIndex.getId(), constraintSet.START);
-        constraintSet.connect(option.getId(), ConstraintSet.END, contenedorIndex.getId(), constraintSet.END);
-        constraintSet.connect(option.getId(), ConstraintSet.BOTTOM, contenedorIndex.getId(), constraintSet.BOTTOM);
-        constraintSet.applyTo(contenedorIndex);
-        return contenedorIndex;
-    }
-
     // Definición de item
     private ConstraintLayout createItem(Context context, Automobile auto, int count) {
         float scale = context.getResources().getDisplayMetrics().density;

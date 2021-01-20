@@ -34,7 +34,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
     private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY_FOR_VIEW = 4;
     private ProgressBar pbLoading;
     private LinearLayout lparent;
-    private TextView title;
+    private TextView title, rPrevios;
     private History history;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,6 +44,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
         historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         title = root.findViewById(R.id.text_history);
+        rPrevios=root.findViewById(R.id.idRprevios);
         lparent = root.findViewById(R.id.idLinearLRows);
         pbLoading = root.findViewById(R.id.pBarHistory);
         historyViewModel.getHistory().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -95,17 +96,18 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
     public void setHistory(History history){
         this.history=history;
-        if(history.getRequests()==0){
-            title.setText(R.string.no_history);
+        if(history.getRequests()==1){
+            historyViewModel.ChangeTitle(history.getRequests());
+            rPrevios.setText("RESULTADO PREVIO");
         }else{
-        historyViewModel.ChangeTitle(history.getRequests());
+        historyViewModel.ChangeTitle(history.getRequests());}
         ItemResult itres = new ItemResult(getContext(),history);
         this.rc=itres.initContainers(lparent);
         for(int x = 0; x<rc.getButtonForm().size(); x++){
             rc.getButtonForm().get(x).setOnClickListener(this);
             rc.getButtonRecom().get(x).setOnClickListener(this);
         }
-        }
+
     }
 
     @Override

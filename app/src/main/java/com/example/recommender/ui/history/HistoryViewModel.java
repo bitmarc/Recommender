@@ -16,7 +16,7 @@ public class HistoryViewModel extends ViewModel {
         title.setValue("");
     }
     public void ChangeTitle(int Number){
-        title.setValue("Numero de solicitudes: "+Number);
+        title.setValue(""+Number);
     }
     public LiveData<String> getTitle(){
         return title;

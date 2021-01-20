@@ -10,8 +10,8 @@
     <dimen name="container_text_values">3sp</dimen>
     <dimen name="normal_text_questions">4sp</dimen>
 
-    <dimen name="normal_text_titles">3sp</dimen>
-    <dimen name="normal_text_values">5sp</dimen>
+    <dimen name="normal_text_titles">2sp</dimen>
+    <dimen name="normal_text_values">4sp</dimen>
 
     <dimen name="normal_text_spinner_dropdown">8sp</dimen>
     <dimen name="normal_text_spinner_set">12sp</dimen>
@@ -26,6 +26,9 @@
     <dimen name="bigFranklin">14sp</dimen>
     <dimen name="LargeFranklin">18sp</dimen>
     <dimen name="ExtraLargeFranklin">24sp</dimen>
+    <dimen name="ExtraLargePlusFranklin">28sp</dimen>
+    <dimen name="MostBiggestFranklin">60sp</dimen>
+
 
     <dimen name="paddingBtn">2dp</dimen>
 

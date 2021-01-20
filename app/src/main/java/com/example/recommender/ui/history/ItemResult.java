@@ -31,20 +31,21 @@ public class ItemResult extends ConstraintLayout{
     private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     private ArrayList<String> idsRes;
     private ArrayList<Button> btnRes, btnForm;
-    private Typeface containerValuesFont;
+    private Typeface franklin;
+    private TextView nRes;
     private float scale;
 
 
     public ItemResult(Context context, History userResults){
         super(context);
         this.context=context;
-        this.containerValuesFont= ResourcesCompat.getFont(context,R.font.franklin_gothic_demi_cond);
         this.scale = context.getResources().getDisplayMetrics().density;
         this.userResults=userResults.getArrRequest();
         this.nresults=userResults.getRequests();
         //idsRes = new ArrayList<>();
         btnForm = new ArrayList<>();
         btnRes = new ArrayList<>();
+        this.franklin= ResourcesCompat.getFont(context,R.font.franklin_gothic_demi_cond);
     }
 
     public ResultContainer initContainers(LinearLayout parent) {
@@ -59,56 +60,69 @@ public class ItemResult extends ConstraintLayout{
     private ConstraintLayout createItem(Context context, int count) {
         ConstraintLayout contenedor = new ConstraintLayout(context);
         contenedor.setId(View.generateViewId());
-        contenedor.setPadding(toPixels(5,scale),toPixels(8,scale),toPixels(5,scale),toPixels(8,scale));
-        //layoutParamsContainer.setMargins(toPixels(5,scale),toPixels(5,scale),toPixels(5,scale),toPixels(5,scale));
+        contenedor.setPadding(0,toPixels(5,scale),0,toPixels(8,scale));
         contenedor.setLayoutParams(layoutParamsContainer);
         //contenedor.setBackgroundColor(Color.parseColor("#FF5733"));
 
+        nRes = new TextView(context);
+        nRes.setId(View.generateViewId());
+        nRes.setText("# "+(count+1));
+        nRes.setTypeface(franklin);
+        nRes.setGravity(Gravity.CENTER);
+        nRes.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        nRes.setTextSize(getResources().getDimension(R.dimen.LargeFranklin));
+        nRes.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+        ConstraintLayout.LayoutParams paramsTvInd=new ConstraintLayout.LayoutParams(toPixels(150,scale), LayoutParams.WRAP_CONTENT);
+        paramsTvInd.setMargins(toPixels(5,scale),0,0,0);
+        nRes.setLayoutParams(paramsTvInd);
+        contenedor.addView(nRes);
+
         TextView numResult = new TextView(context); // title ahora es numberResult
         numResult.setId(View.generateViewId());
-        numResult.setText("Recomendacion #"+userResults.get(count).getId()); // question.getTitle() ahora se coambia por user result
-        numResult.setGravity(Gravity.CENTER);
+        numResult.setText("RESULTADO #"+userResults.get(count).getId()); // question.getTitle() ahora se coambia por user resulT
+        numResult.setTextSize(getResources().getDimension(R.dimen.container_text_values));
         numResult.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        numResult.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        ConstraintLayout.LayoutParams lparamstvResult= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
+        lparamstvResult.setMargins(0,toPixels(15,scale),0,0);
+        numResult.setLayoutParams(lparamstvResult);
         contenedor.addView(numResult);
-        //idsRes.add(numResult.getText().toString());
 
         TextView dateTime = new TextView(context);
         dateTime.setId(View.generateViewId());
         dateTime.setText(userResults.get(count).getDate());
-        dateTime.setGravity(Gravity.CENTER);
         dateTime.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        dateTime.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        dateTime.setTextSize(getResources().getDimension(R.dimen.container_text_values));
+        dateTime.setLayoutParams(new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(dateTime);
 
         TextView profile = new TextView(context);
         profile.setId(View.generateViewId());
         String sourceString = "<b>Perfil:</b> '"+userResults.get(count).getProfile().getName()+"'";
         profile.setText(Html.fromHtml(sourceString));
-        //profile.setText("Perfil: '"+userResults.get(count).getProfile().getName()+"'");
         profile.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        profile.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        profile.setTextSize(getResources().getDimension(R.dimen.container_text_values));
+        profile.setLayoutParams(new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(profile);
 
         TextView numRec = new TextView(context);
         numRec.setId(View.generateViewId());
         numRec.setText("Recomendaciones: "+userResults.get(count).getResults());
         numRec.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        numRec.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        numRec.setTextSize(getResources().getDimension(R.dimen.container_text_values));
+        numRec.setLayoutParams(new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT));
         contenedor.addView(numRec);
 
         final Button bForm = new Button(context);
         bForm.setId(View.generateViewId());
         bForm.setText("Ver formulario");
         bForm.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
-        bForm.setTypeface(containerValuesFont);
+        bForm.setTypeface(franklin);
         bForm.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        bForm.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        bForm.setBackgroundColor(getResources().getColor(R.color.colorBackgroundNav));
         bForm.setPadding(toPixels(2,scale),1,toPixels(2,scale),1);
-        LayoutParams btnFormLp =new LayoutParams(LayoutParams.WRAP_CONTENT, toPixels(25,scale));
-        btnFormLp.setMargins(0,toPixels(5,scale),0,0);
+        LayoutParams btnFormLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(25,scale));
+        btnFormLp.setMargins(0,toPixels(8,scale),0,0);
         bForm.setLayoutParams(btnFormLp);
-        //bForm.setBackgroundColor(getResources().getColor(R.color.recomBox1))
         contenedor.addView(bForm);
         btnForm.add(bForm);
 
@@ -116,11 +130,11 @@ public class ItemResult extends ConstraintLayout{
         bResult.setId(View.generateViewId());
         bResult.setText("Ver recomendaciones");
         bResult.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
-        bResult.setTypeface(containerValuesFont);
+        bResult.setTypeface(franklin);
         bResult.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        bResult.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        bResult.setBackgroundColor(getResources().getColor(R.color.colorBackgroundNav));
         bResult.setPadding(toPixels(2,scale),1,toPixels(2,scale),1);
-        LayoutParams btnResLp =new LayoutParams(LayoutParams.WRAP_CONTENT, toPixels(25,scale));
+        LayoutParams btnResLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(25,scale));
         btnResLp.setMargins(0,toPixels(5,scale),0,0);
         bResult.setLayoutParams(btnResLp);
         //bResult.setBackgroundColor(getResources().getColor(R.color.recomBox1));
@@ -129,28 +143,35 @@ public class ItemResult extends ConstraintLayout{
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(contenedor);
-        constraintSet.connect(numResult.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(numResult.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
+
+        constraintSet.connect(nRes.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
+        constraintSet.connect(nRes.getId(), constraintSet.TOP, contenedor.getId(), constraintSet.TOP);
+        //constraintSet.connect(nRes.getId(), constraintSet.BOTTOM, bForm.getId(), constraintSet.TOP);
+
         constraintSet.connect(numResult.getId(), constraintSet.TOP, contenedor.getId(), constraintSet.TOP);
-        constraintSet.connect(dateTime.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(dateTime.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
+        constraintSet.connect(numResult.getId(), constraintSet.START, nRes.getId(), constraintSet.END);
+        constraintSet.connect(numResult.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
+
         constraintSet.connect(dateTime.getId(), constraintSet.TOP, numResult.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(dateTime.getId(), constraintSet.START, nRes.getId(), constraintSet.END);
+        constraintSet.connect(dateTime.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
 
-        constraintSet.connect(profile.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(profile.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(profile.getId(), constraintSet.TOP, dateTime.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(profile.getId(), constraintSet.START, nRes.getId(), constraintSet.END);
+        constraintSet.connect(profile.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
 
-        constraintSet.connect(numRec.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(numRec.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(numRec.getId(), constraintSet.TOP, profile.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(numRec.getId(), constraintSet.START, nRes.getId(), constraintSet.END);
+        constraintSet.connect(numRec.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
 
+        constraintSet.connect(bForm.getId(), constraintSet.TOP, nRes.getId(), constraintSet.BOTTOM);
         constraintSet.connect(bForm.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
-        constraintSet.connect(bForm.getId(), constraintSet.END, bResult.getId(), constraintSet.START);
-        constraintSet.connect(bForm.getId(), constraintSet.TOP, numRec.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(bForm.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
 
-        constraintSet.connect(bResult.getId(), constraintSet.START, bForm.getId(), constraintSet.END);
+        constraintSet.connect(bResult.getId(), constraintSet.TOP, bForm.getId(), constraintSet.BOTTOM);
+        constraintSet.connect(bResult.getId(), constraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(bResult.getId(), constraintSet.END, contenedor.getId(), constraintSet.END);
-        constraintSet.connect(bResult.getId(), constraintSet.TOP, numRec.getId(), constraintSet.BOTTOM);
+
 
         constraintSet.applyTo(contenedor);
         //contenedor.setBackgroundColor(getResources().getColor(R.color.recomBox2));
