@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public EditText usernameEditText;
     public EditText passwordEditText;
-    public TextView logoApp;
+    //public TextView logoApp;
     public Button loginButton;
     public ProgressBar loadingProgressBar;
     public int LAUNCH_SECOND_ACTIVITY = 1;
@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         this.passwordEditText = findViewById(R.id.password);
         this.loginButton = findViewById(R.id.login);
         this.loadingProgressBar = findViewById(R.id.loading);
-        this.logoApp = findViewById(R.id.logoApp);
-        logoApp.setTypeface(type);
+        //this.logoApp = findViewById(R.id.logoApp);
+        //logoApp.setTypeface(type);
         listener();
     }
 
