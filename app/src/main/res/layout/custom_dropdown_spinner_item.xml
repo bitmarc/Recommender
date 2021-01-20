@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
     android:ellipsize="marquee"
-    android:textSize="15dp"
+    android:textSize="@dimen/normal_text_spinner_dropdown"
     android:background="@android:color/white"
-    android:textColor="@color/colorAccent"
+    android:textColor="@color/colorPrimary"
     android:fontFamily="sans-serif-smallcaps"/>

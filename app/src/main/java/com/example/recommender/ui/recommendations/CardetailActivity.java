@@ -3,10 +3,12 @@ package com.example.recommender.ui.recommendations;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Html;
@@ -35,11 +37,12 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
     private Datasheet datasheet;
     private ConstraintLayout contenedor; //reutilizada
     private LinearLayout contenedorA;
-    private TextView descriptionFavor, descriptionContra, attrib, automovil;
+    private TextView descriptionFavor, descriptionContra, attrib, automovil, tvFavor, tvContra;
     private Button seeMore, bAceptar;
-    private int idButton;
+    private Typeface btnTypeF;
     private LinearLayout parent;
-    private LinearLayout.LayoutParams layoutParamsContainerL = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+    private ConstraintLayout cFavor, cContra;
+    private LinearLayout.LayoutParams layoutParamsContainerL = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
     private ConstraintLayout.LayoutParams layoutParamsContainer = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
     private LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -51,6 +54,11 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         this.parent=findViewById(R.id.detailContainerP);
         this.automovil = findViewById(R.id.detailAutoName);
         this.bAceptar = findViewById(R.id.detailsidButtonBack);
+        this.tvFavor = findViewById(R.id.idTvFavor);
+        this.tvContra = findViewById(R.id.idTvContra);
+        this.cFavor=findViewById(R.id.idPuntosF);
+        this.cContra=findViewById(R.id.idPuntosC);
+        this.btnTypeF= ResourcesCompat.getFont(this,R.font.franklin_gothic_demi_cond);
         Intent intent = getIntent();
         this.auto= (Automobile) intent.getSerializableExtra("auto");
         new getAutoDetailInBackground().execute(auto);
@@ -66,9 +74,13 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void initContainers(Context context, Datasheet datasheet){
+        this.tvFavor.setText(datasheet.getScoreSheet().getPositive());
+        this.tvContra.setText(datasheet.getScoreSheet().getNegative());
         float scale = context.getResources().getDisplayMetrics().density;
-        layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
+        layoutParamsP.setMargins(0, toPixels(5,scale), 0, 0);
         this.parent.addView(createItemFavorContra(context, datasheet.getScoreSheet(), datasheet.getAttributes()),layoutParamsP);
+        //this.cFavor.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT));
+        //this.cContra.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private ConstraintLayout createItemFavorContra(Context context, ScoreSheet score, ArrayList<Attribute> atributos) {
@@ -76,7 +88,7 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         contenedor = new ConstraintLayout(context);
         contenedor.setId(View.generateViewId());
         contenedor.setLayoutParams(layoutParamsContainer);
-
+        /*
         descriptionFavor = new TextView(context);
         descriptionFavor.setId(View.generateViewId());
         descriptionFavor.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
@@ -102,22 +114,26 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         descriptionContra.setText(Html.fromHtml(sourceString));
         descriptionContra.setBackgroundResource(R.drawable.tvback);//*********************
         contenedor.addView(descriptionContra);
-
+        */
         createItemAttribs(context,atributos);
-        contenedorA.setBackgroundResource(R.drawable.tvback);//*********************
         contenedor.addView(contenedorA);
-
         seeMore = new Button(context);
         seeMore.setId(View.generateViewId());
         seeMore.setText(R.string.see_more_btn);
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, toPixels(30,scale));
         params.setMargins(0,toPixels(10,scale),0,toPixels(10,scale));
         seeMore.setLayoutParams(params);
+        seeMore.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        seeMore.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+        seeMore.setTextSize(getResources().getDimension(R.dimen.normal_text_titles));
+        seeMore.setPadding(toPixels(2,scale),0,toPixels(2,scale),0);
+        seeMore.setTypeface(btnTypeF);
         contenedor.addView(seeMore);
         seeMore.setOnClickListener(this);
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(contenedor);
+        /*
         constraintSet.connect(descriptionFavor.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(descriptionFavor.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(descriptionFavor.getId(), ConstraintSet.TOP, contenedor.getId(), constraintSet.TOP);
@@ -125,8 +141,8 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         constraintSet.connect(descriptionContra.getId(), ConstraintSet.TOP, descriptionFavor.getId(), constraintSet.BOTTOM);
         constraintSet.connect(descriptionContra.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(descriptionContra.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
-
-        constraintSet.connect(contenedorA.getId(), ConstraintSet.TOP, descriptionContra.getId(), constraintSet.BOTTOM);
+        */
+        constraintSet.connect(contenedorA.getId(), ConstraintSet.TOP, contenedor.getId(), constraintSet.TOP);
         constraintSet.connect(contenedorA.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(contenedorA.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
 
@@ -134,7 +150,6 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         constraintSet.connect(seeMore.getId(), ConstraintSet.START, contenedor.getId(), constraintSet.START);
         constraintSet.connect(seeMore.getId(), ConstraintSet.END, contenedor.getId(), constraintSet.END);
         constraintSet.connect(seeMore.getId(), ConstraintSet.BOTTOM, contenedor.getId(), constraintSet.BOTTOM);
-        
         constraintSet.applyTo(contenedor);
         //contenedor.setBackgroundColor(getResources().getColor(R.color.recomBox2));
         //contenedor.setBackgroundResource(R.drawable.containerback);
@@ -147,14 +162,16 @@ public class CardetailActivity extends AppCompatActivity implements View.OnClick
         contenedorA.setId(View.generateViewId());
         contenedorA.setLayoutParams(layoutParamsContainerL);//**************
         contenedorA.setOrientation(LinearLayout.VERTICAL);
-        layoutParamsContainerL.setMargins(0, toPixels(0,scale), 0, 0);
+        layoutParamsContainerL.setMargins(toPixels(64,scale), 0, 0, 0);
 
         for(int i=0;i<atributos.size();i++){
             attrib = new TextView(context);
             attrib.setId(View.generateViewId());
             attrib.setPadding(5,0,0,0);
+
             attrib.setElegantTextHeight(true);
-            String sourceString = "<b>" + atributos.get(i).getName() + "</b> :" + atributos.get(i).getDescription() + "<br>";
+            attrib.setTextSize(getResources().getDimension(R.dimen.normal_text_attribs));
+            String sourceString = atributos.get(i).getName() + " :<b><font color="+'"'+"#C8232C"+'"'+">" + atributos.get(i).getDescription()+"</font></b>";
             attrib.setText(Html.fromHtml(sourceString));
             contenedorA.addView(attrib,layoutParamsContainerL);
         }

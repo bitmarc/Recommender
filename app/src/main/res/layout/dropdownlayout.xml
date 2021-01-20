@@ -8,6 +8,7 @@
     android:ellipsize="marquee"
     android:textAlignment="inherit"
     android:padding="1dp"
-    android:textSize="15dp"
-    android:textColor="@color/colorPrimaryDark"
+    android:fontFamily="@font/franklin_gothic_demi_cond"
+    android:textSize="@dimen/normal_text_spinner_set"
+    android:textColor="@color/colorPrimary"
     android:text="Custom Text with multi lines hola hola hola hola hola y adioos" />

@@ -30,17 +30,17 @@ public class HomeFragment extends Fragment {
         activity = (MainActivity) getActivity();
         this.user= activity.getUser();
         homeViewModel = ViewModelProviders.of(this, new HomeViewModelFactory(user)).get(HomeViewModel.class);
-        final Typeface type = Typeface.createFromAsset(getActivity().getAssets(),"fonts/Caveat-Bold.ttf");
+        //final Typeface type = Typeface.createFromAsset(getActivity().getAssets(),"fonts/franklin-gothic-demi-cond.ttf");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView appTitle = root.findViewById(R.id.text_home);
+        //final TextView appTitle = root.findViewById(R.id.text_home);
         final TextView msgWellcome = root.findViewById(R.id.tvWellcome);
         this.loadingProgressBar = root.findViewById(R.id.pB);
 
         homeViewModel.getTitle().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                appTitle.setTypeface(type);
-                appTitle.setText(s);
+                //appTitle.setTypeface(type);
+                //appTitle.setText(s);
             }
         });
 

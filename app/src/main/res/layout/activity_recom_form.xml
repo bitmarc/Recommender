@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundActivity"
     tools:context=".ui.history.RecomForm">
 
     <TextView
         android:id="@+id/tvTitleRecomForm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:gravity="center|clip_vertical"
         android:text="Formulario"
-        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/title_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +25,13 @@
     <Button
         android:id="@+id/btnOk"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginBottom="15dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="Aceptar"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/bigFranklin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,7 +39,7 @@
     <ScrollView
         android:layout_width="409dp"
         android:layout_height="593dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/btnOk"
         app:layout_constraintEnd_toEndOf="parent"

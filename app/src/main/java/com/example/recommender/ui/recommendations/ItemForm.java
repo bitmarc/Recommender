@@ -1,6 +1,7 @@
 package com.example.recommender.ui.recommendations;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.recommender.form.Form;
 import com.example.recommender.form.Question;
@@ -33,6 +35,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
     private ConstraintLayout.LayoutParams layoutParamsContainer = new LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     private LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private int counter;
+    private Typeface containerValuesFont;
     List<List<Integer>> dynamic2D = new ArrayList<List<Integer>>(); //almaceno los id's de cada respuesta para recuperarlos mediante su posicion
 
 
@@ -44,6 +47,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         arrSpiners = new ArrayList<>();
         idsHints = new ArrayList<>();
         this.counter=0;
+        this.containerValuesFont= ResourcesCompat.getFont(context,R.font.franklin_gothic_demi_cond);
     }
 
     public void initContainers(Context context, LinearLayout parent) {
@@ -65,6 +69,9 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         title = new TextView(context);
         title.setId(View.generateViewId());
         title.setText(idsContenedores.size()+1+".- "+question.getTitle());
+        title.setTypeface(containerValuesFont);
+        title.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));//***************
+        title.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         LayoutParams tvLp= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
         //ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
         title.setPadding(toPixels(10,scale),toPixels(5,scale),toPixels(5,scale),toPixels(5,scale));
@@ -72,6 +79,8 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
         //title.setBackgroundResource(R.drawable.containerback);
         contenedor.addView(title);
 
+        LayoutParams spinLp= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
+        spinLp.setMargins(0,toPixels(3,scale),0,toPixels(3,scale));
         spiner = new Spinner(context);
         spiner.setId(View.generateViewId());
         String[] optionsArray = new String[question.getOptions().size()+1];// inicializo un string de los elementos
@@ -85,10 +94,9 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
         }
         ArrayAdapter ad = new ArrayAdapter(context, R.layout.dropdownlayout, optionsArray);
-        //ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, optionsArray);
-        //ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ad.setDropDownViewResource(R.layout.custom_dropdown_spinner_item);
         spiner.setAdapter(ad);
+        spiner.setLayoutParams(spinLp);
         contenedor.addView(spiner);
         idsSpiners.add(spiner.getId());
         arrSpiners.add(spiner);
@@ -114,7 +122,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
         constraintSet.applyTo(contenedor);
         idsContenedores.add(contenedor.getId());
-        contenedor.setBackgroundResource(R.drawable.tvback);
+        contenedor.setBackgroundColor(getResources().getColor(R.color.colorBackgroundContainer));
         return contenedor;
     }
 

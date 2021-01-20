@@ -2,6 +2,7 @@ package com.example.recommender.ui.profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -31,6 +33,7 @@ public class ProfileFragment extends Fragment {
     public ProgressBar loadingProgressBar;
     private int LAUNCH_CHANGE_PASSWORD_ACTIVITY = 2;
     private EditText editTextP;
+    private Typeface franklinfont;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ProfileFragment extends Fragment {
         final Button buttonlogout = root.findViewById(R.id.logout);
         final ImageView ivEditPass = root.findViewById(R.id.ivWaring);
         this.loadingProgressBar = root.findViewById(R.id.pBarHistory);
+        this.franklinfont= ResourcesCompat.getFont(getContext(),R.font.franklin_gothic_demi_cond);
         fabDone.hide();
 
         profileViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
@@ -123,7 +127,7 @@ public class ProfileFragment extends Fragment {
                          EditText editTextEa, Button buttonlogout, ImageView ivEditP){
         if(editTextPn.isEnabled()){
             fabEdit.setImageResource(R.drawable.ic_baseline_edit_24);
-            fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorAccent));
+            fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorPrimary));
             fabDone.hide();
             buttonlogout.setEnabled(true);
 
@@ -131,16 +135,19 @@ public class ProfileFragment extends Fragment {
             editTextPn.setClickable(false);
             editTextPn.setCursorVisible(false);
             editTextPn.setBackground(null);
+            editTextPn.setTextColor(getResources().getColor(R.color.colorTextPrimary));
 
             editTextUn.setEnabled(false);
             editTextUn.setClickable(false);
             editTextUn.setCursorVisible(false);
             editTextUn.setBackground(null);
+            editTextUn.setTextColor(getResources().getColor(R.color.colorTextPrimary));
 
             editTextEa.setEnabled(false);
             editTextEa.setClickable(false);
             editTextEa.setCursorVisible(false);
             editTextEa.setBackground(null);
+            editTextEa.setTextColor(getResources().getColor(R.color.colorTextPrimary));
 
             ivEditP.setClickable(false);
             ivEditP.setVisibility(View.GONE);
@@ -148,26 +155,30 @@ public class ProfileFragment extends Fragment {
 
         }else{
             fabEdit.setImageResource(R.drawable.ic_baseline_cancel_24);
-            fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorButtonX));
+            fabEdit.setSupportBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.colorPrimary));
             fabDone.show();
             buttonlogout.setEnabled(false);
 
             editTextPn.setEnabled(true);
             editTextPn.setClickable(true);
             editTextPn.setCursorVisible(true);
+            editTextPn.setTextColor(getResources().getColor(R.color.colorBackgroundNav));
             editTextPn.setBackgroundResource(android.R.drawable.edit_text);
 
             editTextUn.setEnabled(true);
             editTextUn.setClickable(true);
             editTextUn.setCursorVisible(true);
+            editTextUn.setTextColor(getResources().getColor(R.color.colorBackgroundNav));
             editTextUn.setBackgroundResource(android.R.drawable.edit_text);
 
             editTextEa.setEnabled(true);
             editTextEa.setClickable(true);
             editTextEa.setCursorVisible(true);
+            editTextEa.setTextColor(getResources().getColor(R.color.colorBackgroundNav));
             editTextEa.setBackgroundResource(android.R.drawable.edit_text);
 
             ivEditP.setClickable(true);
+            ivEditP.setColorFilter(getResources().getColor(R.color.colorTextPrimary));
             ivEditP.setVisibility(View.VISIBLE);
 
         }

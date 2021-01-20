@@ -3,13 +3,16 @@ package com.example.recommender.ui.recommendations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,13 +40,15 @@ public class RecommendationsFragment extends Fragment {
     private LinearLayout containerP;
     private TextView bienvenida;
     private TextView title_form;
-    private Button BtnStart;
+    private ImageView ivHand;
+    private Button btnStart;
     private Button sendB;
     private ProgressBar pbLoading;
     private ItemForm form;
     private MainActivity activity;
     private User user;
     private int LAUNCH_RECOMMENDATION_RESULT_ACTIVITY = 3;
+    private Typeface containerValuesFont;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -59,25 +65,36 @@ public class RecommendationsFragment extends Fragment {
     }
 
     private void restoreScreen(Context context, LinearLayout parent) {
-        LinearLayout.LayoutParams layoutParamsP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         float scale = context.getResources().getDisplayMetrics().density;
-        layoutParamsP.setMargins(0, toPixels(20,scale), 0, 0);
+        LinearLayout.LayoutParams layoutParamsTv = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParamsBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, toPixels(25,scale));
+        layoutParamsTv.setMargins(toPixels(20,scale), toPixels(70,scale), toPixels(20,scale), 0);
+        layoutParamsBtn.setMargins(0, toPixels(20,scale), 0, 0);
         bienvenida = new TextView(context);
+        bienvenida.setLayoutParams(layoutParamsTv);
         bienvenida.setId(View.generateViewId());
-        String sourceString = getResources().getString(R.string.message_start_recommender)+"<br> <i>" + getResources().getString(R.string.objective) + "</i> ";
+        String sourceString = getResources().getString(R.string.message_start_recommender)+"<br><br><i>" + getResources().getString(R.string.objective)+"</i>" ;
         bienvenida.setText(Html.fromHtml(sourceString));
         bienvenida.setTextSize(toPixels(5,scale));
+        bienvenida.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         parent.addView(bienvenida);
-        BtnStart = new Button(context);
-        BtnStart.setId(View.generateViewId());
-        BtnStart.setText("Empezar");
-        BtnStart.setOnClickListener(new View.OnClickListener() {
+        btnStart = new Button(context);
+        btnStart.setId(View.generateViewId());
+        layoutParamsBtn.gravity = Gravity.CENTER;
+        btnStart.setLayoutParams(layoutParamsBtn);
+        btnStart.setText("Empezar");
+        btnStart.setPadding(toPixels(2,scale),0,toPixels(2,scale),0);
+        btnStart.setTypeface(containerValuesFont);
+        btnStart.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
+        btnStart.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+        btnStart.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recommendationsViewModel.changeUI(true);
             }
         });
-        parent.addView(BtnStart);
+        parent.addView(btnStart);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,12 +103,18 @@ public class RecommendationsFragment extends Fragment {
         activity = (MainActivity) getActivity();
         user= activity.getUser();
         View root = inflater.inflate(R.layout.fragment_recommendations, container, false);
-
-        title_form = root.findViewById(R.id.text_recommendations);
-        BtnStart = root.findViewById(R.id.idBsttart);
-        sendB = root.findViewById(R.id.sendB);
+        this.containerValuesFont= ResourcesCompat.getFont(getContext(),R.font.franklin_gothic_demi_cond);
         containerP = root.findViewById(R.id.containerP);
+        title_form = root.findViewById(R.id.text_recommendations);
+        title_form.setVisibility(View.GONE);
+        btnStart = root.findViewById(R.id.idBsttart);
+        ivHand = root.findViewById(R.id.ivHand);
+        ivHand.setVisibility(View.GONE);
+        sendB = root.findViewById(R.id.sendB);
+        sendB.setVisibility(View.GONE);
         pbLoading = root.findViewById(R.id.pbLoading);
+        pbLoading.setVisibility(View.GONE);
+
 
         recommendationsViewModel.SetUI().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -100,6 +123,7 @@ public class RecommendationsFragment extends Fragment {
                     containerP.removeAllViewsInLayout();
                     title_form.setVisibility(View.VISIBLE);
                     sendB.setVisibility(View.VISIBLE);
+                    ivHand.setVisibility(View.VISIBLE);
                     new getUserFormInBackground().execute();
                 }
                 else{
@@ -107,6 +131,7 @@ public class RecommendationsFragment extends Fragment {
                     restoreScreen(getActivity(),containerP);
                     title_form.setVisibility(View.INVISIBLE);
                     sendB.setVisibility(View.INVISIBLE);
+                    ivHand.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -127,7 +152,7 @@ public class RecommendationsFragment extends Fragment {
             }
         });
 
-        BtnStart.setOnClickListener(new View.OnClickListener() {
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recommendationsViewModel.changeUI(true);

@@ -9,24 +9,25 @@
 
     <TextView
         android:id="@+id/text_recommendations"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         android:text="@string/title_form"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:textStyle="bold|italic"
-        android:visibility="gone"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/title_text_normalFont"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivHand"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/sendB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +43,10 @@
                 android:id="@+id/idtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="100dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/message_start_recommender"
-                android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -60,10 +62,13 @@
     <Button
         android:id="@+id/sendB"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="55dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="65dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="@string/send_data_recom"
-        android:visibility="gone"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/bigFranklin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -74,8 +79,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivHand"
+        android:layout_width="70dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_mano_formulario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

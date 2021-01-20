@@ -55,7 +55,7 @@ public class RecomForm extends AppCompatActivity {
     }
 
     private void buildFormToView(Form userForm) {
-        title.setText("Respuestas del formulario #"+idReq);
+        title.setText("Respuestas de la solicitud #"+idReq);
         this.formBuilder = new ItemForm(getApplicationContext(),userForm);
         formBuilder.initContainers(getApplicationContext(),containerP);
         formBuilder.setResults();
