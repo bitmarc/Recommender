@@ -50,6 +50,9 @@
         android:hint="@string/prompt_username"
         android:inputType="textAutoComplete"
         android:selectAllOnFocus="true"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoApp" />
@@ -66,6 +69,9 @@
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
