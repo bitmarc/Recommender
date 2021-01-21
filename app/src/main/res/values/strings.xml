@@ -4,11 +4,11 @@
     <string name="app_info">UPIITA-IPN 2020</string>
     <string name="app_developer_email">marcoarojas.95@gmail.com</string>
     <!-- Strings related to login -->
-    <string name="prompt_username">Nombre de Usuario</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="prompt_person_name">Nombre Personal</string>
-    <string name="prompt_email">Correo electronico</string>
-    <string name="prompt_repeat_password">Repite contraseña</string>
+    <string name="prompt_username">NOMBRE DE USUARIO: </string>
+    <string name="prompt_password">CONTRASEÑA: </string>
+    <string name="prompt_person_name">NOMBRE Y APLELLIDO: </string>
+    <string name="prompt_email">CORREO ELECTRONICO: </string>
+    <string name="prompt_repeat_password">REPITE TU CONTRASEÑA: </string>
 
     <string name="action_sign_in">Iniciar sesión</string>
     <string name="action_sign_up">Registrarse</string>
@@ -21,7 +21,7 @@
     <string name="error_password">Contraseña de usuario incorrecta</string>
     <string name="invalid_email">El correo electronico es erroneo</string>
     <string name="login_failed">"Error al inicair sesión, usuario o contraseña incorrectos"</string>
-    <string name="signup_title">Nuevo Registro</string>
+    <string name="signup_title">INFORMACIÓN DE REGISTRO</string>
     <string name="signup_or_text">ó</string>
 
     <string name="logout_text">Cerrar sesión</string>

@@ -4,7 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fontFamily="@font/franklin_gothic_demi_cond"
     tools:context=".ui.signUp.SignupActivity">
+
+
+    <TextView
+        android:id="@+id/tvTitleSignup"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:background="@color/colorBackgroundContainer"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:gravity="center|clip_vertical"
+        android:text="@string/signup_title"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/ExtraLargePlusFranklin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBarSignup"
@@ -19,28 +35,18 @@
 
     <Button
         android:id="@+id/signupLaunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="30dp"
-        android:text="Registrarse"
+        android:background="@color/colorPrimary"
         android:enabled="false"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:text="Registrarse"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/ExtraLargePlusFranklin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTitleSignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="164dp"
-        android:text="@string/signup_title"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvPersonName"
@@ -49,7 +55,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:text="@string/prompt_person_name"
-        android:textSize="18sp"
+        android:textSize="@dimen/LargeFranklin"
+        android:textStyle="bold"
+        android:textColor="@color/colorBackgroundContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleSignup" />
 
@@ -63,6 +71,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPersonName" />
@@ -74,8 +83,10 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:text="@string/prompt_username"
-        android:textSize="18sp"
         android:inputType="text"
+        android:textSize="@dimen/LargeFranklin"
+        android:textStyle="bold"
+        android:textColor="@color/colorBackgroundContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
@@ -89,6 +100,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
@@ -100,7 +112,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:text="@string/prompt_email"
-        android:textSize="18sp"
+        android:textSize="@dimen/LargeFranklin"
+        android:textStyle="bold"
+        android:textColor="@color/colorBackgroundContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
 
@@ -114,6 +128,7 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
@@ -125,7 +140,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:text="@string/prompt_password"
-        android:textSize="18sp"
+        android:textSize="@dimen/LargeFranklin"
+        android:textStyle="bold"
+        android:textColor="@color/colorBackgroundContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
@@ -139,6 +156,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
@@ -150,7 +168,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:text="@string/prompt_repeat_password"
-        android:textSize="18sp"
+        android:textSize="@dimen/LargeFranklin"
+        android:textStyle="bold"
+        android:textColor="@color/colorBackgroundContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
@@ -164,6 +184,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPasswordRepeat" />
