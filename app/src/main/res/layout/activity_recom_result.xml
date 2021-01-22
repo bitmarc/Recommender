@@ -94,13 +94,13 @@
     <Button
         android:id="@+id/bAceptar"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="10dp"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="Aceptar"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/bigFranklin"
+        android:textSize="@dimen/btnMenusExt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

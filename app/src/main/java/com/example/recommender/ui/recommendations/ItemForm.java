@@ -104,7 +104,7 @@ public class ItemForm extends ConstraintLayout implements AdapterView.OnItemSele
 
         imageHint = new Button(context);
         imageHint.setId(View.generateViewId());
-        imageHint.setBackground(context.getDrawable(R.drawable.ic_baseline_help_outline_24));
+        imageHint.setBackground(context.getDrawable(R.drawable.ic_f__signo_interrogaci_n));
         imageHint.setLayoutParams(new LinearLayout.LayoutParams(toPixels(25, scale), toPixels(25, scale)));
         imageHint.setOnClickListener(this);
         idsHints.add(imageHint.getId());

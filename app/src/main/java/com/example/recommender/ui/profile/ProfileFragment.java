@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
             editTextPn.setClickable(false);
             editTextPn.setCursorVisible(false);
             editTextPn.setBackground(null);
-            editTextPn.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+            editTextPn.setTextColor(getResources().getColor(R.color.colorPrimary));
 
             editTextUn.setEnabled(false);
             editTextUn.setClickable(false);

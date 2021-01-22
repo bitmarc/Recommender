@@ -79,7 +79,8 @@ public class ItemResult extends ConstraintLayout{
 
         TextView numResult = new TextView(context); // title ahora es numberResult
         numResult.setId(View.generateViewId());
-        numResult.setText("RESULTADO #"+userResults.get(count).getId()); // question.getTitle() ahora se coambia por user resulT
+        String sourceString = "Id de resultado: <b>"+userResults.get(count).getId()+"</b>";
+        numResult.setText(Html.fromHtml(sourceString)); // question.getTitle() ahora se coambia por user resulT
         numResult.setTextSize(getResources().getDimension(R.dimen.container_text_values));
         numResult.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         ConstraintLayout.LayoutParams lparamstvResult= new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT);
@@ -97,7 +98,7 @@ public class ItemResult extends ConstraintLayout{
 
         TextView profile = new TextView(context);
         profile.setId(View.generateViewId());
-        String sourceString = "<b>Perfil:</b> '"+userResults.get(count).getProfile().getName()+"'";
+        sourceString = "Perfil: <b>'"+userResults.get(count).getProfile().getName()+"'</b>";
         profile.setText(Html.fromHtml(sourceString));
         profile.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         profile.setTextSize(getResources().getDimension(R.dimen.container_text_values));
@@ -106,7 +107,8 @@ public class ItemResult extends ConstraintLayout{
 
         TextView numRec = new TextView(context);
         numRec.setId(View.generateViewId());
-        numRec.setText("Recomendaciones: "+userResults.get(count).getResults());
+        sourceString = "No. de recomendaciones: <b>"+userResults.get(count).getResults()+"</b>";
+        numRec.setText(Html.fromHtml(sourceString));
         numRec.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         numRec.setTextSize(getResources().getDimension(R.dimen.container_text_values));
         numRec.setLayoutParams(new LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT));
@@ -115,12 +117,12 @@ public class ItemResult extends ConstraintLayout{
         final Button bForm = new Button(context);
         bForm.setId(View.generateViewId());
         bForm.setText("Ver formulario");
-        bForm.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
+        bForm.setTextSize(getResources().getDimension(R.dimen.normal_text_values));
         bForm.setTypeface(franklin);
         bForm.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         bForm.setBackgroundColor(getResources().getColor(R.color.colorBackgroundNav));
         bForm.setPadding(toPixels(2,scale),1,toPixels(2,scale),1);
-        LayoutParams btnFormLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(25,scale));
+        LayoutParams btnFormLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(32,scale));
         btnFormLp.setMargins(0,toPixels(8,scale),0,0);
         bForm.setLayoutParams(btnFormLp);
         contenedor.addView(bForm);
@@ -129,12 +131,12 @@ public class ItemResult extends ConstraintLayout{
         Button bResult = new Button(context);
         bResult.setId(View.generateViewId());
         bResult.setText("Ver recomendaciones");
-        bResult.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
+        bResult.setTextSize(getResources().getDimension(R.dimen.normal_text_values));
         bResult.setTypeface(franklin);
         bResult.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         bResult.setBackgroundColor(getResources().getColor(R.color.colorBackgroundNav));
         bResult.setPadding(toPixels(2,scale),1,toPixels(2,scale),1);
-        LayoutParams btnResLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(25,scale));
+        LayoutParams btnResLp =new LayoutParams(LayoutParams.MATCH_CONSTRAINT, toPixels(32,scale));
         btnResLp.setMargins(0,toPixels(5,scale),0,0);
         bResult.setLayoutParams(btnResLp);
         //bResult.setBackgroundColor(getResources().getColor(R.color.recomBox1));

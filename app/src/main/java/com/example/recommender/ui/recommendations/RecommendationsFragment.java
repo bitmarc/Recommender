@@ -67,7 +67,7 @@ public class RecommendationsFragment extends Fragment {
     private void restoreScreen(Context context, LinearLayout parent) {
         float scale = context.getResources().getDisplayMetrics().density;
         LinearLayout.LayoutParams layoutParamsTv = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams layoutParamsBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, toPixels(25,scale));
+        LinearLayout.LayoutParams layoutParamsBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, toPixels(30,scale));
         layoutParamsTv.setMargins(toPixels(20,scale), toPixels(70,scale), toPixels(20,scale), 0);
         layoutParamsBtn.setMargins(0, toPixels(20,scale), 0, 0);
         bienvenida = new TextView(context);
@@ -82,10 +82,10 @@ public class RecommendationsFragment extends Fragment {
         btnStart.setId(View.generateViewId());
         layoutParamsBtn.gravity = Gravity.CENTER;
         btnStart.setLayoutParams(layoutParamsBtn);
-        btnStart.setText("Empezar");
-        btnStart.setPadding(toPixels(2,scale),0,toPixels(2,scale),0);
+        btnStart.setText(R.string.action_start);
+        btnStart.setPadding(toPixels(3,scale),0,toPixels(3,scale),0);
         btnStart.setTypeface(containerValuesFont);
-        btnStart.setTextSize(getResources().getDimension(R.dimen.normal_text_questions));
+        btnStart.setTextSize(getResources().getDimension(R.dimen.btnMenus));
         btnStart.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         btnStart.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         btnStart.setOnClickListener(new View.OnClickListener() {

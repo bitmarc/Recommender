@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:text="@string/title_form"
         android:textAlignment="textStart"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/sendB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_recommendations">
+        app:layout_constraintTop_toBottomOf="@+id/ivHand">
 
         <LinearLayout
             android:id="@+id/containerP"
@@ -62,13 +62,15 @@
     <Button
         android:id="@+id/sendB"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="65dp"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:text="@string/send_data_recom"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/bigFranklin"
+        android:textSize="@dimen/btnMenusExt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -88,7 +90,7 @@
         android:layout_width="70dp"
         android:layout_height="75dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_mano_formulario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

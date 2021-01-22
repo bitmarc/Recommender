@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/ic_f__hombre" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -64,6 +64,7 @@
         android:layout_marginEnd="20dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_edit_24"
+        android:tint="@color/colorTextPrimary"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -83,8 +84,8 @@
         android:fontFamily="@font/franklin_gothic_demi_cond"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/title_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />

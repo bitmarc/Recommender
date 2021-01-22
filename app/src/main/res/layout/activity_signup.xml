@@ -17,7 +17,7 @@
         android:gravity="center|clip_vertical"
         android:text="@string/signup_title"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/ExtraLargePlusFranklin"
+        android:textSize="@dimen/SuperLargeFranklin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,15 +35,17 @@
 
     <Button
         android:id="@+id/signupLaunch"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginBottom="30dp"
         android:background="@color/colorPrimary"
         android:enabled="false"
         android:fontFamily="@font/franklin_gothic_demi_cond"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:text="Registrarse"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/ExtraLargePlusFranklin"
+        android:textSize="@dimen/SuperLargeFranklin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,10 +56,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="@string/prompt_person_name"
-        android:textSize="@dimen/LargeFranklin"
-        android:textStyle="bold"
         android:textColor="@color/colorBackgroundContainer"
+        android:textSize="@dimen/LargeFranklinPlus"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleSignup" />
 
@@ -82,11 +85,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
-        android:text="@string/prompt_username"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:inputType="text"
-        android:textSize="@dimen/LargeFranklin"
-        android:textStyle="bold"
+        android:text="@string/prompt_username"
         android:textColor="@color/colorBackgroundContainer"
+        android:textSize="@dimen/LargeFranklinPlus"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
@@ -111,10 +115,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="@string/prompt_email"
-        android:textSize="@dimen/LargeFranklin"
-        android:textStyle="bold"
         android:textColor="@color/colorBackgroundContainer"
+        android:textSize="@dimen/LargeFranklinPlus"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
 
@@ -139,10 +144,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="@string/prompt_password"
-        android:textSize="@dimen/LargeFranklin"
-        android:textStyle="bold"
         android:textColor="@color/colorBackgroundContainer"
+        android:textSize="@dimen/LargeFranklinPlus"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
@@ -167,10 +173,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
+        android:fontFamily="@font/franklin_gothic_demi_cond"
         android:text="@string/prompt_repeat_password"
-        android:textSize="@dimen/LargeFranklin"
-        android:textStyle="bold"
         android:textColor="@color/colorBackgroundContainer"
+        android:textSize="@dimen/LargeFranklinPlus"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
