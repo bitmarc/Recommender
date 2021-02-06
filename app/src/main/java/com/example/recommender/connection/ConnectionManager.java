@@ -26,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ConnectionManager {
     private Retrofit retrofit;
     private JsonApi jsonApi;
-    //private Context context;
+    private String base_Url="http://192.168.0.104:5000/";
+
 
     public ConnectionManager(String username, String password){ //usada para cuando se requiere autenticacion en la cabecera http
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -37,7 +38,7 @@ public class ConnectionManager {
                 .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.104:5000/")
+                .baseUrl(base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -51,7 +52,7 @@ public class ConnectionManager {
                 .addInterceptor(loggingInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.104:5000/")
+                .baseUrl(base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
